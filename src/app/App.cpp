@@ -8,7 +8,7 @@
 
 #include "simpletext.h"
 #include "utils.hpp"
-#include "GLHelpers.hpp"
+#include "draw/GLHelpers.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0) {
    // load what needs to be loaded here (for example textures)

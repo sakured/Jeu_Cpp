@@ -5,7 +5,12 @@
 
 #include <iostream>
 
-#include "App.hpp"
+#include "app/App.hpp"
+#include "tower/tower.hpp"
+#include "enemy/enemy.hpp"
+#include "graph/graph.hpp"
+
+#include "draw/draw.hpp"
 
 namespace {
     App& window_as_app(GLFWwindow* window)
@@ -17,7 +22,21 @@ namespace {
 // Optional: limit the frame rate
 constexpr double TARGET_TIME_FOR_FRAME { 1.0 / 60.0 };
 
+// Window properties
+static const unsigned int WINDOW_WIDTH = 1280;
+static const unsigned int WINDOW_HEIGHT = 720;
+static const char WINDOW_TITLE[] = "Tower Defense";
+
+// Initialisation de la liste d'adjacence et du graph de la map
+std::vector<std::vector<float>> adjacency_matrix_map {} ;
+Graph::WeightedGraph adjacency_list_map { Graph::adjacency_list_from_adjacency_matrix(adjacency_matrix_map) };
+
+// Initialisation de la liste d'enemis et de tours
+// std::vector<enemy> enemies {};
+// std::vector<tower> towers {};
+
 int main() {
+
     // Set an error callback to display glfw errors
     glfwSetErrorCallback([](int error, const char* description) {
         std::cerr << "Error " << error << ": " << description << std::endl;
@@ -28,17 +47,8 @@ int main() {
         return -1;
     }
 
-// Not working on apple with those hint for unknown reason
-// #ifdef __APPLE__
-//     // We need to explicitly ask for a 3.3 context on Mac
-//     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-//     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-//     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-//     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-// #endif
-
     // Create window
-    GLFWwindow* window { glfwCreateWindow(1280, 720, "Window", nullptr, nullptr) };
+    GLFWwindow* window { glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL) };
     if (!window) {
         std::cerr << "Failed to create window" << std::endl;
         glfwTerminate();
