@@ -3,6 +3,7 @@
 #include <utility>
 #include <stack>
 #include <queue>
+#include <algorithm>
 #pragma once
 
 namespace Graph {
