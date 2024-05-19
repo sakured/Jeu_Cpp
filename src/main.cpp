@@ -32,8 +32,8 @@ std::vector<std::vector<float>> adjacency_matrix_map {} ;
 Graph::WeightedGraph adjacency_list_map { Graph::adjacency_list_from_adjacency_matrix(adjacency_matrix_map) };
 
 // Initialisation de la liste d'enemis et de tours
-// std::vector<enemy> enemies {};
-// std::vector<tower> towers {};
+std::vector<enemy> enemies {};
+std::vector<tower> towers {};
 
 int main() {
 
