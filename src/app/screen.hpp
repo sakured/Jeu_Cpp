@@ -1,10 +1,11 @@
 #include <utility>
+#include <vector>
 
 #ifndef CASE_VALUES
 
 inline const int WIDTH_OF_MAP {16}; // à changer
-inline const int SIZE_OF_MAP {500}; // à changer
-inline const int SIZE_OF_CASE {SIZE_OF_MAP / WIDTH_OF_MAP};
+inline const float SIZE_OF_MAP {1.6f}; // à changer
+inline const float SIZE_OF_CASE {SIZE_OF_MAP / (float)WIDTH_OF_MAP};
 
 #endif
 
@@ -17,9 +18,8 @@ enum class CASE_TYPE {
 
 struct Case {
     unsigned int case_id {};
-    int pos_x {};
-    int pos_y {};
-    int width {};
+    float pos_x {};
+    float pos_y {};
     CASE_TYPE type {};
     bool is_occupied { false };
 
@@ -38,3 +38,5 @@ struct Button {
     void action();
     bool is_pressed();
 };
+
+std::vector<Case> create_case_list(float map_pos_x, float map_pos_y);

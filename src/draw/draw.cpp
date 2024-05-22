@@ -56,8 +56,8 @@ void draw_case(Case my_case) {
     glPopMatrix();
 }
 
-void draw_map() {
-    // for (Case my_case : list_cases) {
-    //     draw_case(my_case);
-    // }
+void draw_map(std::vector<Case> case_list) {
+    for (auto & my_case : case_list) {
+        draw_case(my_case);
+    }
 }

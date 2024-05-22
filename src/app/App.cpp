@@ -15,7 +15,6 @@
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
-
     img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
     _texture = loadTexture(test);
 
@@ -50,12 +49,15 @@ void App::update()
 
 void App::render()
 {
+
+    std::vector<Case> liste_cases = create_case_list(0.0f, 0.0f);
+
     // Clear the color and depth buffers of the frame buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    draw_map(); // Dessin de la map
+    draw_map(liste_cases); // Dessin de la map
 
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);

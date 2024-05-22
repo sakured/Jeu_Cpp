@@ -17,4 +17,4 @@
 void draw_tour(Case my_case, GLuint sprite);
 
 void draw_case(Case my_case);
-void draw_map();
+void draw_map(std::vector<Case> case_list);
