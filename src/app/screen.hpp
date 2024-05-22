@@ -1,5 +1,13 @@
 #include <utility>
 
+#ifndef CASE_VALUES
+
+inline const int WIDTH_OF_MAP {16}; // à changer
+inline const int SIZE_OF_MAP {500}; // à changer
+inline const int SIZE_OF_CASE {SIZE_OF_MAP / WIDTH_OF_MAP};
+
+#endif
+
 enum class CASE_TYPE {
     START,
     END,

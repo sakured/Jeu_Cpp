@@ -10,13 +10,17 @@
 #include "utils.hpp"
 #include "draw/GLHelpers.hpp"
 
+#include <draw/draw.hpp>
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
     img::Image test{img::load(make_absolute_path("images/map.png", true), 3, true)};
-
     _texture = loadTexture(test);
+
+    // Tower sprites
+    
 }
 
 void App::setup()
@@ -51,22 +55,22 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    draw_map(); // Dessin de la map
+
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.5f, -0.5f);
-    glVertex2f(0.5f, -0.5f);
-    glVertex2f(0.5f, 0.5f);
-    glVertex2f(-0.5f, 0.5f);
-    glEnd();
-
-    glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    draw_quad_with_texture(_texture);
-    glPopMatrix();
-
-    TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
+    // glBegin(GL_QUADS);
+    // glVertex2f(-0.5f, -0.5f);
+    // glVertex2f(0.5f, -0.5f);
+    // glVertex2f(0.5f, 0.5f);
+    // glVertex2f(-0.5f, 0.5f);
+    // glEnd();
+    // glPushMatrix();
+    // glScalef(0.8f, 0.8f, 0.8f);
+    // glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+    // draw_quad_with_texture(_texture);
+    // glPopMatrix();
+    // TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
 
     // Without set precision
     // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
