@@ -104,12 +104,6 @@ std::unordered_map<int, std::pair<float, int>> Graph::dijkstra(Graph::WeightedGr
                 }
             }
         }
-
-        // VERIFICATION DE DIJKSTRA
-        // for (std::pair<int, std::pair<float, int>> pair : distances) {
-        //     std::cout << "Noeud " << pair.first << " ( " << pair.second.first << " , " << pair.second.second << " ) "; 
-        // }
-        // std::cout << std::endl;
     }
 
     return distances;

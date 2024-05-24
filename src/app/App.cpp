@@ -12,6 +12,13 @@
 
 #include <draw/draw.hpp>
 
+#include "../graph/graph.hpp"
+
+std::string MAP_FILE_NAME {};
+std::vector<int> IN {};
+std::vector<int> OUT {};
+std::vector<int> PATH {};
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
@@ -32,6 +39,9 @@ void App::setup()
     TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
     TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer.EnableBlending(true);
+
+    // Lecture du fichier ITD
+    read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
 }
 
 void App::update()
@@ -57,27 +67,10 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    draw_map(liste_cases); // Dessin de la map
+    draw_map(liste_cases); 
 
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);
-    // glBegin(GL_QUADS);
-    // glVertex2f(-0.5f, -0.5f);
-    // glVertex2f(0.5f, -0.5f);
-    // glVertex2f(0.5f, 0.5f);
-    // glVertex2f(-0.5f, 0.5f);
-    // glEnd();
-    // glPushMatrix();
-    // glScalef(0.8f, 0.8f, 0.8f);
-    // glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    // draw_quad_with_texture(_texture);
-    // glPopMatrix();
-    // TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
-
-    // Without set precision
-    // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
-    // With c++20 you can use std::format
-    // const std::string angle_label_text { std::format("Angle: {:.2f}", _angle) };
 
     // Using stringstream to format the string with fixed precision
     std::string angle_label_text{};
