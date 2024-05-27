@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
+#include "screen.hpp"
 
 class App {
 public:
@@ -28,6 +29,8 @@ private:
     // Add your variables here
     GLuint _texture {};
     float _angle {};
+    std::vector<Case> _tile_list;
+
 
     SimpleText TextRenderer {};
 };

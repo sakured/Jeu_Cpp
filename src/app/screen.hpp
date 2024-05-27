@@ -1,11 +1,18 @@
 #include <utility>
 #include <vector>
+#include <stdint.h>
+
+#pragma once
 
 #ifndef CASE_VALUES
 
 inline const int WIDTH_OF_MAP {16}; // à changer
 inline const float SIZE_OF_MAP {1.6f}; // à changer
 inline const float SIZE_OF_CASE {SIZE_OF_MAP / (float)WIDTH_OF_MAP};
+
+inline const float START_OF_MAP_X {0.0f};
+inline const float START_OF_MAP_Y {0.0f};
+
 
 #endif
 
@@ -39,4 +46,6 @@ struct Button {
     bool is_pressed();
 };
 
-std::vector<Case> create_case_list(float map_pos_x, float map_pos_y);
+std::vector<Case> create_case_list(uint8_t *map_reference, size_t size);
+
+CASE_TYPE get_case_type_from_rgb(int r, int g, int b);
