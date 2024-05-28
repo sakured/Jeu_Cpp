@@ -29,6 +29,9 @@ private:
     // Add your variables here
     GLuint _texture {};
     float _angle {};
+
+    GLuint _tower_sprite {};
+
     std::vector<Case> _tile_list;
 
 

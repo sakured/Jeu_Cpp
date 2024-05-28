@@ -22,9 +22,11 @@ std::vector<int> PATH {};
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
-    img::Image test {img::load(make_absolute_path("images/map.png", true), 3, true)};
-    _tile_list = create_case_list(test.data(), test.data_size());
-    _texture = loadTexture(test);
+    img::Image map {img::load(make_absolute_path("images/map.png", true), 3, true)};
+    _tile_list = create_case_list(map.data(), map.data_size());
+
+    img::Image tower {img::load(make_absolute_path("images/tower.png", true), 3, true)};
+    _tower_sprite = loadTexture(tower);
 
     // Tower sprites
     
