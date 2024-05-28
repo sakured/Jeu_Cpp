@@ -6,13 +6,12 @@
 
 #ifndef CASE_VALUES
 
-inline const int WIDTH_OF_MAP {16}; // à changer
-inline const float SIZE_OF_MAP {1.6f}; // à changer
+inline const int WIDTH_OF_MAP {16}; 
+inline const float SIZE_OF_MAP {1.6f}; 
 inline const float SIZE_OF_CASE {SIZE_OF_MAP / (float)WIDTH_OF_MAP};
 
 inline const float START_OF_MAP_X {0.0f};
 inline const float START_OF_MAP_Y {0.0f};
-
 
 #endif
 

@@ -5,6 +5,9 @@
 #include <queue>
 #include "graph.hpp"
 
+/**
+ * Permet de savoir si un noeud existe dans le graphe
+*/
 bool Graph::WeightedGraph::is_existing(int const id) {
     if (this->adjacency_list.find(id) != this->adjacency_list.end()) {
         return true;
@@ -12,6 +15,9 @@ bool Graph::WeightedGraph::is_existing(int const id) {
     return false;
 }
 
+/**
+ * Ajoute un noeud au graphe
+*/
 void Graph::WeightedGraph::add_vertex(int const id) {
     std::vector<Graph::WeightedGraphEdge> list_edges {};
     if (!this->is_existing(id)) {
@@ -19,22 +25,31 @@ void Graph::WeightedGraph::add_vertex(int const id) {
     }
 }
 
+/**
+ * Ajoute une arête orientée dans le graphe
+*/
 void Graph::WeightedGraph::add_directed_edge(int const from, int const to, float const weight) {
     this->add_vertex(from);
     this->add_vertex(to);
     auto key { this->adjacency_list.find(from) };
-    (*key).second.push_back({to, weight}); 
+    key->second.push_back({to, weight}); 
 }
 
+/**
+ * Ajoute une arête non orientée dans le graphe
+*/
 void Graph::WeightedGraph::add_undirected_edge(int const from, int const to, float const weight) {
     this->add_vertex(from);
     this->add_vertex(to);
     auto key_from { this->adjacency_list.find(from) };
-    (*key_from).second.push_back({to, weight});
+    key_from->second.push_back({to, weight});
     auto key_to { this->adjacency_list.find(to) };
-    (*key_to).second.push_back({from, weight}); 
+    key_to->second.push_back({from, weight}); 
 }
 
+/**
+ * Créé un graphe à partir d'une matrice d'adjacence
+*/
 Graph::WeightedGraph Graph::adjacency_list_from_adjacency_matrix (std::vector<std::vector<float>> const& adjacency_matrix) {
     Graph::WeightedGraph graph {};
     for (int from=0; from<adjacency_matrix.size(); from++) {
@@ -47,6 +62,9 @@ Graph::WeightedGraph Graph::adjacency_list_from_adjacency_matrix (std::vector<st
     return graph;
 }
 
+/**
+ * Affichage DFS
+*/
 void Graph::WeightedGraph::print_DFS(int const start) const {
     std::vector<int> already_printed {};
     std::stack<int> stack {};
@@ -64,6 +82,9 @@ void Graph::WeightedGraph::print_DFS(int const start) const {
     }
 }
 
+/**
+ * Affichage BFS
+*/
 void Graph::WeightedGraph::print_BFS(int const start) const {
     std::vector<int> already_printed {};
     std::queue<int> queue {};
@@ -81,6 +102,9 @@ void Graph::WeightedGraph::print_BFS(int const start) const {
     }
 }
 
+/**
+ * Dijkstra
+*/
 std::unordered_map<int, std::pair<float, int>> Graph::dijkstra(Graph::WeightedGraph const & graph, int const start, int const end) {
     std::unordered_map<int, std::pair<float, int>> distances {}; // neuds à visiter
     std::priority_queue<std::pair<float, int>> nodes_to_visit {}; // plus courtes distances jusqu'aux noeuds déjà visités

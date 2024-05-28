@@ -1,5 +1,8 @@
 #include "tower.hpp"
 
+/**
+ * Crée une tour selon un type donné
+*/
 tower tower::create_tower(int pos_x, int pos_y, TOWER_TYPE type) {
     tower tower {};
 

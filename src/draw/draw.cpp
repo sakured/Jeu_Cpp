@@ -2,14 +2,16 @@
 #include "draw.hpp"
 
 /**
- * TO DO : 
- * LIRE L'IMAGE PNG DE LA MAP POUR SAVOIR QUELS SPRITES METTRE SUR LA MAP DANS LA FENETRE
+ * TO DO :
  * DRAW TOUR
  * DRAW ENNEMI
  * DRAW BOUTONS
  * DRAW TOUT LE TEXTE AUTOUR DANS UNE FONCTION SETUP()
 */
 
+/**
+ * Dessine une tour
+*/
 void draw_tour(Case my_case, GLuint sprite) {
     glColor3f(0.5f, 0.5f, 0.5f);
     glPushMatrix();
@@ -26,6 +28,9 @@ void draw_tour(Case my_case, GLuint sprite) {
     glPopMatrix();
 }
 
+/**
+ * Dessine une case
+*/
 void draw_case(Case my_case) {
     // Choix de la bonne texture
     switch (my_case.type) {
@@ -59,6 +64,9 @@ void draw_case(Case my_case) {
     glPopMatrix();
 }
 
+/**
+ * Dessine une map
+*/
 void draw_map(std::vector<Case> case_list) {
     for (auto & my_case : case_list) {
         draw_case(my_case);

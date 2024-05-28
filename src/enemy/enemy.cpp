@@ -1,5 +1,8 @@
 #include "enemy.hpp"
 
+/**
+ * Crée un ennemi d'un type donné
+*/
 enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
     enemy enemy {};
 
