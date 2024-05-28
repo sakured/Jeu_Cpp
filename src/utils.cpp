@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+/**
+ * Crée un chemin absolu vers un fichier
+*/
 std::filesystem::path make_absolute_path(std::filesystem::path const& path, bool check_path_exists)
 {
     auto const res {path.is_relative() ? CMAKE_SOURCE_DIR / path : path };
@@ -19,6 +22,9 @@ std::filesystem::path make_absolute_path(std::filesystem::path const& path, bool
 
 auto const is_space = [](char letter){ return letter == ' '; };
 
+/**
+ * Sépare les mots d'une chaine de caractères dans un tableau
+*/
 std::vector<std::string> split_string(std::string const& str) {
     std::vector<std::string> vec {};
     auto it_begin { str.begin() };
