@@ -21,8 +21,10 @@ int Case::get_id_from_position(int const pos_x, int const pos_y) {
 }
 
 CASE_TYPE get_case_type_from_rgb(int r, int g, int b) {
-    if (r == 0 && g == 0 && b == 0) return CASE_TYPE::BLANK;
-    if (r== 167 && g== 0 && b == 250) return CASE_TYPE::START;
+    if (r == 0 && g == 0 && b == 255) return CASE_TYPE::START;
+    if (r == 255 && g == 0 && b == 0) return CASE_TYPE::END;
+    if (r == 0 && g == 255 && b == 0) return CASE_TYPE::TOWER;
+    if (r == 255 && g == 255 && b == 255) return CASE_TYPE::ROAD;
     else return CASE_TYPE::BLANK;
 }
 
@@ -34,7 +36,7 @@ std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
 
     for (size_t i {0}; i < size; i += case_size) {
         float pos_x {START_OF_MAP_X + i/case_size%WIDTH_OF_MAP*SIZE_OF_CASE};
-        float pos_y {START_OF_MAP_Y + i/case_size/WIDTH_OF_MAP*SIZE_OF_CASE};
+        float pos_y {START_OF_MAP_Y + (WIDTH_OF_MAP-1 - i/case_size/WIDTH_OF_MAP)%WIDTH_OF_MAP*SIZE_OF_CASE};
 
         CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
 
@@ -42,11 +44,5 @@ std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
         case_id++;
     }
     
-    // for (float i = START_OF_MAP_X; i < START_OF_MAP_X + SIZE_OF_MAP; i += SIZE_OF_CASE) {
-    //     for (float j = START_OF_MAP_Y; j < START_OF_MAP_Y + SIZE_OF_MAP; j += SIZE_OF_CASE ) { 
-    //         case_list.push_back({case_id, i, j, CASE_TYPE::END, true});
-    //         case_id++;
-    //     }
-    // }
     return case_list;
 }

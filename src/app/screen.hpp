@@ -21,6 +21,7 @@ enum class CASE_TYPE {
     END,
     ROAD,
     BLANK,
+    TOWER
 };
 
 struct Case {
