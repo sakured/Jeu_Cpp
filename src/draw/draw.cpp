@@ -52,16 +52,12 @@ void draw_case(Case my_case) {
     }
 
     // Dessin de la case
-    glPushMatrix();
-    glScalef(1, -1, 1);
-    glTranslatef(-0.8, -0.75, 0);
 	glBegin(GL_QUADS);
 		glVertex2f(my_case.pos_x, my_case.pos_y);
 		glVertex2f(my_case.pos_x, my_case.pos_y + SIZE_OF_CASE);
 		glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y + SIZE_OF_CASE);
 		glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y);
 	glEnd();
-    glPopMatrix();
 }
 
 /**
