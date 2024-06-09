@@ -13,13 +13,9 @@
 
 #include <draw/draw.hpp>
 
+#include "screen.hpp"
 #include "../graph/graph.hpp"
 #include "../tower/tower.hpp"
-
-std::string MAP_FILE_NAME {};
-std::vector<int> IN {};
-std::vector<int> OUT {};
-std::vector<int> PATH {};
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -44,9 +40,6 @@ void App::setup()
     TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
     TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer.EnableBlending(true);
-
-    // Lecture du fichier ITD
-    read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
 }
 
 void App::update()
@@ -69,13 +62,11 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // Lecture du fichier ITD
+    read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
 
     // Dessin de la map
-    glPushMatrix();
-        glScalef(.8, -.8, 1);
-        glTranslatef(-1, -1, 0);
-        draw_map(_tile_list); // Dessin de la map
-    glPopMatrix();
+    draw_map(_tile_list); 
 
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);
@@ -106,12 +97,15 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         float map = _height - 2 * vertical_margin;
         xpos -= (_width / 2) - (map / 2);
         ypos -= vertical_margin;
-        std::pair<int,int> case_coordinate {(int)(xpos/(map/WIDTH_OF_MAP)) , (int)(ypos/(map/WIDTH_OF_MAP))};
+        std::pair<int,int> case_coordinate { (int)(xpos/(map/WIDTH_OF_MAP)) , (int)(ypos/(map/WIDTH_OF_MAP))};
         std::cout << "Case(" << case_coordinate.first << "," << case_coordinate.second << ") " << std::endl;
+        
         // Création d'une tour BOW à la case cliquée
-        if (case_coordinate.first >= 0 && case_coordinate.first < WIDTH_OF_MAP && case_coordinate.second >= 0 && case_coordinate.second < WIDTH_OF_MAP) {
+        if (case_coordinate.first >= 0 && case_coordinate.first < WIDTH_OF_MAP && case_coordinate.second >= 0 && case_coordinate.second < WIDTH_OF_MAP
+            && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
             tower tower { create_tower(case_coordinate.first, case_coordinate.second, TOWER_TYPE::BOW) };
             _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
+            draw_tower(get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list));
         }
 	}
 }
