@@ -48,7 +48,7 @@ std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
 
     for (size_t i {0}; i < size; i += case_size) {
         float pos_x {START_OF_MAP_X + i/case_size%WIDTH_OF_MAP * SIZE_OF_CASE};
-        float pos_y {START_OF_MAP_Y + (WIDTH_OF_MAP-1 - i/case_size/WIDTH_OF_MAP) % WIDTH_OF_MAP * SIZE_OF_CASE};
+        float pos_y {START_OF_MAP_Y + (WIDTH_OF_MAP-1 - i/case_size/WIDTH_OF_MAP) * SIZE_OF_CASE};
 
         CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
 
