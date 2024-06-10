@@ -37,4 +37,6 @@ private:
     std::vector<Case> _tile_list;
 
     SimpleText TextRenderer {};
+
+    int _money {100};
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "draw.hpp"
+#include "../app/App.hpp"
 
 
 /**
@@ -65,3 +66,16 @@ void draw_map(std::vector<Case> case_list) {
         draw_case(my_case);
     }
 }
+
+/**
+ * Dessine les informations du level (tours, ennemis...)
+ */
+// void draw_level_informations (int level, /*SimpleText Renderer,*/ float width, float height, int money) {
+    // std::string money_label_text {};
+    // std::stringstream stream {};
+    // stream << std::fixed << "Argent disponible : " << std::setprecision(2) << money;
+    // money_label_text = stream.str();
+    // TextRenderer.Label("TOWER TYPE BOW", 30, 50, SimpleText::CENTER);
+
+    // TextRenderer.Render();
+// }

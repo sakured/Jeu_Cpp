@@ -12,11 +12,11 @@ enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
             break;
         
         case ENEMY_TYPE::KNIGHT:
-            enemy = {type, pos_x, pos_y, 12, 4, 0, 3, 8, 100};
+            enemy = {type, pos_x, pos_y, 12, 4, 1, 3, 8, 100};
             break;
 
         case ENEMY_TYPE::BOMBER:
-            enemy = {type, pos_x, pos_y, 8, 10, 0, 3, 15, 20};
+            enemy = {type, pos_x, pos_y, 8, 10, 1, 3, 15, 20};
             break;
 
         default:
