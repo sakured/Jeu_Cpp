@@ -13,7 +13,7 @@ std::pair<int,int> get_position_from_id(int const id) {
 }
 
 /**
- * Permet d'obtenir l'id d'une cas à partir de sa position (x,y)
+ * Permet d'obtenir l'id d'une case à partir de sa position (x,y)
 */
 int get_id_from_position(int const pos_x, int const pos_y) {
     return (pos_y * WIDTH_OF_MAP + pos_x);
@@ -25,6 +25,29 @@ int get_id_from_position(int const pos_x, int const pos_y) {
 Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list) {
     return list[get_id_from_position(pos_x, pos_y)];
 }
+
+/**
+ * @brief Get the case coordonates from gl coordonates object
+ * 
+ * @param x 
+ * @param y 
+ * @return std::pair<int, int> 
+ */
+std::pair<int, int> get_case_coordonates_from_gl_coordonates(float x, float y) {
+    return std::make_pair((int)((x - START_OF_MAP_X)/SIZE_OF_CASE), (int)((y - START_OF_MAP_Y)/SIZE_OF_CASE));
+}
+
+/**
+ * @brief Get the gl coordonates from case coordonates object
+ * 
+ * @param pos_x 
+ * @param pos_y 
+ * @return std::pair<float, float> 
+ */
+std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int pos_y) {
+    return std::make_pair((float)(pos_x*SIZE_OF_CASE + START_OF_MAP_X), (float)(pos_y*SIZE_OF_CASE + START_OF_MAP_Y));
+}
+
 
 /**
  * Permet d'obtenir le type d'une cas à partir de sa couleur (rgb)
