@@ -16,6 +16,7 @@
 #include "screen.hpp"
 #include "../graph/graph.hpp"
 #include "../tower/tower.hpp"
+#include "../enemy/enemy.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -27,6 +28,12 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     for (auto & tower_type : ALL_TOWER_TYPES) {
         img::Image tower {img::load(make_absolute_path(get_sprite_from_type(tower_type).c_str(), true), 3, true)};
         _tower_sprites.push_back(loadTexture(tower));
+    }
+
+    // Enemy sprites
+    for (auto & enemy_type : ALL_ENEMY_TYPES) {
+        img::Image enemy {img::load(make_absolute_path(get_sprite_from_type(enemy_type).c_str(), true), 3, true)};
+        _enemy_sprites.push_back(loadTexture(enemy));
     }
 }
 
