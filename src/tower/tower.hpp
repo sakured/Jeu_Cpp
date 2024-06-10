@@ -19,6 +19,7 @@ struct tower {
     unsigned int range;
     unsigned int pace;
 
-    // Crée une nouvelle tour selon une position et un type
-    tower create_tower(int pos_x, int pos_y, TOWER_TYPE type);
 };
+
+// Crée une nouvelle tour selon une position et un type
+tower create_tower(int pos_x, int pos_y, TOWER_TYPE type);

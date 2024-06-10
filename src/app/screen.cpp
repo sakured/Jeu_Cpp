@@ -5,18 +5,25 @@
 /**
  * Permet d'obtenir la position (x,y) d'une cas à partir de son id
 */
-std::pair<int,int> Case::get_position_from_id(int const id) {
+std::pair<int,int> get_position_from_id(int const id) {
     std::pair<int,int> position {};
-    position.first = (id % WIDTH_OF_MAP) * SIZE_OF_CASE;
-    position.second = (id % WIDTH_OF_MAP) * SIZE_OF_CASE;
+    position.first = id % WIDTH_OF_MAP;
+    position.second = id - (id % WIDTH_OF_MAP) / WIDTH_OF_MAP;
     return position;
 }
 
 /**
  * Permet d'obtenir l'id d'une cas à partir de sa position (x,y)
 */
-int Case::get_id_from_position(int const pos_x, int const pos_y) {
-    return (pos_y * WIDTH_OF_MAP + pos_x) / SIZE_OF_CASE;
+int get_id_from_position(int const pos_x, int const pos_y) {
+    return (pos_y * WIDTH_OF_MAP + pos_x);
+}
+
+/**
+ * Permet d'obtenir une case à partir de sa position (x,y)
+*/
+Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list) {
+    return list[get_id_from_position(pos_x, pos_y)];
 }
 
 /**
@@ -52,8 +59,8 @@ std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
 
         CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
 
-        if (case_type == CASE_TYPE::TOWER) case_list.push_back({case_id, pos_x, pos_y, case_type, false});
-        else case_list.push_back({case_id, pos_x, pos_y, case_type, true});
+        if (case_type == CASE_TYPE::BLANK) case_list.push_back({case_id, pos_x, pos_y, case_type, true});
+        else case_list.push_back({case_id, pos_x, pos_y, case_type, false});
 
         case_id++;
     }

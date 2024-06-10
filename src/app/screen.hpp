@@ -1,5 +1,6 @@
 #include <utility>
 #include <vector>
+#include <string>
 #include <stdint.h>
 
 #pragma once
@@ -7,11 +8,16 @@
 #ifndef CASE_VALUES
 
 inline const int WIDTH_OF_MAP {16}; 
-inline const float SIZE_OF_MAP {1.6f}; 
+inline float SIZE_OF_MAP {2.f}; 
 inline const float SIZE_OF_CASE {SIZE_OF_MAP / (float)WIDTH_OF_MAP};
 
 inline const float START_OF_MAP_X {0.0f};
 inline const float START_OF_MAP_Y {0.0f};
+
+inline std::string MAP_FILE_NAME {};
+inline std::vector<int> IN {};
+inline std::vector<int> OUT {};
+inline std::vector<int> PATH {};
 
 #endif
 
@@ -29,9 +35,6 @@ struct Case {
     float pos_y {};
     CASE_TYPE type {};
     bool is_occupied { false };
-
-    std::pair<int,int> get_position_from_id(int const id);
-    int get_id_from_position(int const pos_x, int const pos_y);
 };
 
 // Je pense que cette structure est inutile,
@@ -45,6 +48,12 @@ struct Button {
     void action();
     bool is_pressed();
 };
+
+std::pair<int,int> get_position_from_id(int const id);
+
+int get_id_from_position(int const pos_x, int const pos_y);
+
+Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list);
 
 std::vector<Case> create_case_list(uint8_t *map_reference, size_t size);
 
