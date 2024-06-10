@@ -53,6 +53,11 @@ std::pair<int,int> get_position_from_id(int const id);
 
 int get_id_from_position(int const pos_x, int const pos_y);
 
+std::pair<int, int> get_case_coordonates_from_gl_coordonates(float x, float y);
+
+std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int pos_y);
+
+
 Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list);
 
 std::vector<Case> create_case_list(uint8_t *map_reference, size_t size);

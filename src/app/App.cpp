@@ -29,9 +29,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     _tile_list = create_case_list(map.data(), map.data_size());
 
     // Tower sprites
-    img::Image tower {img::load(make_absolute_path("images/tower.png", true), 3, true)};
-    _tower_sprite = loadTexture(tower);
-    
+    for (auto & tower_type : ALL_TOWER_TYPES) {
+        img::Image tower {img::load(make_absolute_path(get_sprite_from_type(tower_type).c_str(), true), 3, true)};
+        _tower_sprites.push_back(loadTexture(tower));
+    }
 }
 
 void App::setup()

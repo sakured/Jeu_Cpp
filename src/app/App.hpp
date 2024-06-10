@@ -31,7 +31,8 @@ private:
     GLuint _texture {};
     float _angle {};
 
-    GLuint _tower_sprite {};
+    std::vector<GLuint> _tower_sprites;
+    std::vector<GLuint> _enemy_sprites;
 
     std::vector<Case> _tile_list;
 

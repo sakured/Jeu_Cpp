@@ -8,11 +8,11 @@ tower create_tower(int pos_x, int pos_y, TOWER_TYPE type) {
 
     switch (type) {
         case TOWER_TYPE::BOW:
-            tower = {type, pos_x, pos_y, "", 50, 3, 12, 10};
+            tower = {type, pos_x, pos_y, 50, 3, 12, 10};
             break;
             
         case TOWER_TYPE::CROSSBOW:
-            tower = {type, pos_x, pos_y, "", 75, 5, 10, 5};
+            tower = {type, pos_x, pos_y, 75, 5, 10, 5};
             break;
 
         default:
@@ -20,4 +20,8 @@ tower create_tower(int pos_x, int pos_y, TOWER_TYPE type) {
     }
 
     return tower;
+}
+
+std::string get_sprite_from_type(TOWER_TYPE type) {
+    return ALL_TOWER_SPRITES[(int)type];
 }
