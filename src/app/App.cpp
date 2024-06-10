@@ -102,31 +102,44 @@ void App::render()
     int margin = (int)(_height * 0.13);
 
     // Informations sur les tours
-    TextRenderer.Label("TOWER TYPE BOW", 30, margin, SimpleText::LEFT);
-    TextRenderer.Label("Cost : 50", 30, margin + 20, SimpleText::LEFT);
-    TextRenderer.Label("Damage : 12", 30, margin + 40, SimpleText::LEFT);
-    TextRenderer.Label("Range : 3", 30, margin + 60, SimpleText::LEFT);
-    TextRenderer.Label("TOWER TYPE CROSSBOW", 30, margin + 120, SimpleText::LEFT);
-    TextRenderer.Label("Cost : 75", 30, margin + 140, SimpleText::LEFT);
-    TextRenderer.Label("Damage : 10", 30, margin + 160, SimpleText::LEFT);
-    TextRenderer.Label("Range : 5", 30, margin + 180, SimpleText::LEFT);
+    TextRenderer.Label("TOWER TYPE BOW", 100, margin, SimpleText::LEFT);
+    TextRenderer.Label("Cost : 50", 100, margin + 20, SimpleText::LEFT);
+    TextRenderer.Label("Damage : 12", 100, margin + 40, SimpleText::LEFT);
+    TextRenderer.Label("Range : 3", 100, margin + 60, SimpleText::LEFT);
+    TextRenderer.Label("TOWER TYPE CROSSBOW", 100, margin + 120, SimpleText::LEFT);
+    TextRenderer.Label("Cost : 75", 100, margin + 140, SimpleText::LEFT);
+    TextRenderer.Label("Damage : 10", 100, margin + 160, SimpleText::LEFT);
+    TextRenderer.Label("Range : 5", 100, margin + 180, SimpleText::LEFT);
 
     // Informations sur les ennemis
-    TextRenderer.Label("ENEMY TYPE ARCHER", _width - 30, margin, SimpleText::RIGHT);
-    TextRenderer.Label("Reward : 10", _width - 30, margin + 20, SimpleText::RIGHT);
-    TextRenderer.Label("Damage : 2", _width - 30, margin + 40, SimpleText::RIGHT);
-    TextRenderer.Label("Range : 4", _width - 30, margin + 60, SimpleText::RIGHT);
-    TextRenderer.Label("PV : 50", _width - 30, margin + 80, SimpleText::RIGHT);
-    TextRenderer.Label("ENEMY TYPE KNIGHT", _width - 30, margin + 140, SimpleText::RIGHT);
-    TextRenderer.Label("Reward : 12", _width - 30, margin + 160, SimpleText::RIGHT);
-    TextRenderer.Label("Damage : 4", _width - 30, margin + 180, SimpleText::RIGHT);
-    TextRenderer.Label("Range : 1", _width - 30, margin + 200, SimpleText::RIGHT);
-    TextRenderer.Label("PV : 100", _width - 30, margin + 220, SimpleText::RIGHT);
-    TextRenderer.Label("ENEMY TYPE BOMBER", _width - 30, margin + 280, SimpleText::RIGHT);
-    TextRenderer.Label("Reward : 8", _width - 30, margin + 300, SimpleText::RIGHT);
-    TextRenderer.Label("Damage : 10", _width - 30, margin + 320, SimpleText::RIGHT);
-    TextRenderer.Label("Range : 1", _width - 30, margin + 340, SimpleText::RIGHT);
-    TextRenderer.Label("PV : 20", _width - 30, margin + 360, SimpleText::RIGHT);
+    TextRenderer.Label("ENEMY TYPE ARCHER", _width - 100, margin, SimpleText::RIGHT);
+    TextRenderer.Label("Reward : 10", _width - 100, margin + 20, SimpleText::RIGHT);
+    TextRenderer.Label("Damage : 2", _width - 100, margin + 40, SimpleText::RIGHT);
+    TextRenderer.Label("Range : 4", _width - 100, margin + 60, SimpleText::RIGHT);
+    TextRenderer.Label("PV : 50", _width - 100, margin + 80, SimpleText::RIGHT);
+    TextRenderer.Label("ENEMY TYPE KNIGHT", _width - 100, margin + 140, SimpleText::RIGHT);
+    TextRenderer.Label("Reward : 12", _width - 100, margin + 160, SimpleText::RIGHT);
+    TextRenderer.Label("Damage : 4", _width - 100, margin + 180, SimpleText::RIGHT);
+    TextRenderer.Label("Range : 1", _width - 100, margin + 200, SimpleText::RIGHT);
+    TextRenderer.Label("PV : 100", _width - 100, margin + 220, SimpleText::RIGHT);
+    TextRenderer.Label("ENEMY TYPE BOMBER", _width - 100, margin + 280, SimpleText::RIGHT);
+    TextRenderer.Label("Reward : 8", _width - 100, margin + 300, SimpleText::RIGHT);
+    TextRenderer.Label("Damage : 10", _width - 100, margin + 320, SimpleText::RIGHT);
+    TextRenderer.Label("Range : 1", _width - 100, margin + 340, SimpleText::RIGHT);
+    TextRenderer.Label("PV : 20", _width - 100, margin + 360, SimpleText::RIGHT);
+
+    // Images des tour
+    // img::Image image {img::load(make_absolute_path("images/Enemies/body_tracks.png", true), 3, true)};
+    // GLuint sprite {loadTexture(image)};
+    // draw_quad_with_texture(sprite);
+    // glPushMatrix();
+    //     glScalef(.5, .5, 1);
+    //     glTranslatef(-3, 1.6, 0);
+    //     glTranslatef(0, -.4, 0);
+    //     image = img::load(make_absolute_path("images/Towers/turret_01_mk2.gif", true), 3, true);
+    //     sprite = loadTexture(image);
+    //     draw_quad_with_texture(sprite);
+    // glPopMatrix();
 
     // Mise à jour du texte
     TextRenderer.Render();
