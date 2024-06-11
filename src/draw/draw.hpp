@@ -23,4 +23,4 @@ void draw_map(std::vector<Case> case_list);
 
 void update_case_texture (int x_pos, int y_pos);
 
-// void draw_level_informations (int level, /*SimpleText Renderer,*/ float width, float height, int money);
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, std::vector<GLuint> & _tower_sprites);
