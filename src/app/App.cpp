@@ -37,7 +37,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 
     // Enemy sprites
     for (auto & enemy_type : ALL_ENEMY_TYPES) {
-        img::Image enemy {img::load(make_absolute_path(get_sprite_from_type(enemy_type).c_str(), true), 3, true)};
+        img::Image enemy {img::load(make_absolute_path(get_sprite_from_type(enemy_type).c_str(), true), 4, true)};
         _enemy_sprites.push_back(loadTexture(enemy));
     }
 }
@@ -76,7 +76,7 @@ void App::render()
 
     // Dessin de la map et des infos
     draw_map(_tile_list);
-    draw_level_informations(1, TextRenderer, _width, _height, _money, _tower_sprites); 
+    draw_level_informations(1, TextRenderer, _width, _height, _money, _tower_sprites, _enemy_sprites); 
 
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);
@@ -87,20 +87,7 @@ void App::render()
     stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
     angle_label_text = stream.str();
     TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
-
-    // Images des tour
-    // img::Image image {img::load(make_absolute_path("images/Enemies/body_tracks.png", true), 4, true)};
-    // GLuint sprite {loadTexture(image)};
-    draw_quad_with_texture(_tower_sprites[0]);
-    // glPushMatrix();
-    //     glScalef(.5, .5, 1);
-    //     glTranslatef(-3, 1.6, 0);
-    //     glTranslatef(0, -.4, 0);
-    //     image = img::load(make_absolute_path("images/Towers/turret_01_mk2.gif", true), 4, true);
-    //     sprite = loadTexture(image);
-    //     draw_quad_with_texture(sprite);
-    // glPopMatrix();
-
+    
     // Mise à jour du texte
     TextRenderer.Render();
 }
@@ -125,6 +112,7 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         // Création d'une tour BOW à la case cliquée
         if (case_coordinate.first >= 0 && case_coordinate.first < WIDTH_OF_MAP && case_coordinate.second >= 0 && case_coordinate.second < WIDTH_OF_MAP
         && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
+            std::cout << "liiibre " << WIDTH_OF_MAP << std::endl;
             tower tower { create_tower(case_coordinate.first, case_coordinate.second, TOWER_TYPE::BOW) };
             _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
             draw_tower(get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list));

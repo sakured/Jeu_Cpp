@@ -50,7 +50,7 @@ std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int 
 
 
 /**
- * Permet d'obtenir le type d'une cas à partir de sa couleur (rgb)
+ * Permet d'obtenir le type d'une case à partir de sa couleur (rgb)
 */
 CASE_TYPE get_case_type_from_rgb(int r, int g, int b) {
     if (r == IN[0] && g == IN[1] && b == IN[2]) return CASE_TYPE::START;

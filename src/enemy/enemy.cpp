@@ -3,7 +3,7 @@
 /**
  * Crée un ennemi d'un type donné
 */
-enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
+enemy create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
     enemy enemy {};
 
     switch (type) {
@@ -26,6 +26,35 @@ enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
     return enemy;
 };
 
+/**
+ * Récupère le sprite de l'ennemi
+ */
 std::string get_sprite_from_type(ENEMY_TYPE type) {
     return ALL_ENEMY_SPRITES[(int)type];
+}
+
+/**
+ * Récupère le nom du type de l'ennemi'
+*/
+std::string enemy_type_to_string(ENEMY_TYPE type) {
+    std::string string_type {};
+
+    switch (type) {
+        case ENEMY_TYPE::ARCHER:
+            string_type = "ARCHER";
+            break;
+            
+        case ENEMY_TYPE::KNIGHT:
+            string_type = "KNIGHT";
+            break;
+
+        case ENEMY_TYPE::BOMBER:
+            string_type = "BOMBER";
+            break;
+
+        default:
+            break;
+    }
+
+    return string_type;
 }

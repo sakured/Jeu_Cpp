@@ -3,6 +3,7 @@
 #include <img/img.hpp>
 
 #include <sstream>
+#include <utility>
 
 #include "simpletext.h"
 #include "utils.hpp"
@@ -10,8 +11,6 @@
 
 #include "app/screen.hpp"
 #include "app/App.hpp"
-
-#include <utility>
 
 #pragma once
 
@@ -23,4 +22,4 @@ void draw_map(std::vector<Case> case_list);
 
 void update_case_texture (int x_pos, int y_pos);
 
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, std::vector<GLuint> & _tower_sprites);
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites);
