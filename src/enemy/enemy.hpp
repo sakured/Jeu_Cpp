@@ -7,13 +7,15 @@ enum class ENEMY_TYPE {
     BOMBER
 };
 
+static const ENEMY_TYPE ALL_ENEMY_TYPES[] = {ENEMY_TYPE::ARCHER, ENEMY_TYPE::KNIGHT, ENEMY_TYPE::BOMBER};
+
+static const std::string ALL_ENEMY_SPRITES[] = {"images/Enemies/body_tracks.gif", "images/Enemies/body_halftrack.gif", "images/Enemies/body_tracks.gif"};
+
 struct enemy {
     ENEMY_TYPE type;
 
     int pos_x;
     int pos_y;
-
-    std::string sprite;
 
     unsigned int gain;
     unsigned int damage;
@@ -25,3 +27,5 @@ struct enemy {
     // Crée un nouvel ennemi selon une position et un type
     enemy create_enemy(int pos_x, int pos_y, ENEMY_TYPE type);
 };
+
+std::string get_sprite_from_type(ENEMY_TYPE type);

@@ -8,15 +8,15 @@ enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
 
     switch (type) {
         case ENEMY_TYPE::ARCHER:
-            enemy = {type, pos_x, pos_y, "", 10, 2, 4, 5, 10, 50};
+            enemy = {type, pos_x, pos_y, 10, 2, 4, 5, 10, 50};
             break;
         
         case ENEMY_TYPE::KNIGHT:
-            enemy = {type, pos_x, pos_y, "", 12, 4, 1, 3, 8, 100};
+            enemy = {type, pos_x, pos_y, 12, 4, 1, 3, 8, 100};
             break;
 
         case ENEMY_TYPE::BOMBER:
-            enemy = {type, pos_x, pos_y, "", 8, 10, 1, 3, 15, 20};
+            enemy = {type, pos_x, pos_y, 8, 10, 1, 3, 15, 20};
             break;
 
         default:
@@ -25,3 +25,7 @@ enemy enemy::create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
 
     return enemy;
 };
+
+std::string get_sprite_from_type(ENEMY_TYPE type) {
+    return ALL_ENEMY_SPRITES[(int)type];
+}
