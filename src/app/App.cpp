@@ -24,7 +24,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image map {img::load(make_absolute_path("images/map.png", true), 3, true)};
 
     // Lecture du fichier ITD
-    read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
+    _graph = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
+    std::cout << _graph.adjacency_list.at(1).at(0).to;
 
     // Création de la liste de case
     _tile_list = create_case_list(map.data(), map.data_size());

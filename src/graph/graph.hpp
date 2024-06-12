@@ -44,5 +44,5 @@ namespace Graph {
 // bool is_in_stack(std::stack<int> stack, int target);
 // bool is_in_queue(std::queue<int> queue, int target);
 
-void read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path);
+Graph::WeightedGraph read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path);
 std::vector<std::vector<float>> from_list_nodes_to_adjency_matrix(std::vector<std::vector<int>> & list_nodes, int number_of_nodes);

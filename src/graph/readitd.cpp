@@ -12,8 +12,10 @@ const char * FILE_NAME {"../../data/map1.itd"};
 /**
  * Lit le fichier ITD
 */
-void read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path) {
+Graph::WeightedGraph read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path) {
     std::ifstream itd_file(FILE_NAME);
+
+    Graph::WeightedGraph graph {};
 
     // On lit le fichier ITD
     if (itd_file) {
@@ -73,13 +75,15 @@ void read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & 
 
         // Création de la liste d'adjacence du graphe
         std::vector<std::vector<float>> adjacency_matrix { from_list_nodes_to_adjency_matrix(list_nodes, number_of_nodes) };
-        Graph::WeightedGraph graph { Graph::adjacency_list_from_adjacency_matrix(adjacency_matrix) };
+        graph = Graph::adjacency_list_from_adjacency_matrix(adjacency_matrix);
     }
     
     // Le fichier ITD ne s'ouvre pas
     else {
         std::cout << "Impossible d'ouvrir le fichier ITD" << std::endl;
     }
+
+    return graph;
 }
 
 /**

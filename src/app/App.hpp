@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <simpletext.h>
 #include "screen.hpp"
+#include "graph\graph.hpp"
 
 class App {
 public:
@@ -31,10 +32,12 @@ private:
     GLuint _texture {};
     float _angle {};
 
-    std::vector<GLuint> _tower_sprites;
-    std::vector<GLuint> _enemy_sprites;
+    std::vector<GLuint> _tower_sprites {};
+    std::vector<GLuint> _enemy_sprites {};
 
-    std::vector<Case> _tile_list;
+    Graph::WeightedGraph _graph;
+
+    std::vector<Case> _tile_list {};
 
     SimpleText TextRenderer {};
 
