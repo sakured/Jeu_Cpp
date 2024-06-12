@@ -27,3 +27,5 @@ struct tower {
 tower create_tower(int pos_x, int pos_y, TOWER_TYPE type);
 
 std::string get_sprite_from_type(TOWER_TYPE type);
+
+std::string tower_type_to_string(TOWER_TYPE type);

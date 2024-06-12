@@ -1,5 +1,6 @@
 #include "GLHelpers.hpp"
 #include "glad/glad.h"
+#include <iostream>
 
 /**
  * Télécharge une texture
@@ -16,8 +17,7 @@ GLuint loadTexture(uint8_t const* data, int width, int height) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     // Error on MACOS (segmentation fault) when using glGenerateMipmap
     // glGenerateMipmap(GL_TEXTURE_2D);
     glDisable(GL_TEXTURE_2D);
@@ -29,7 +29,9 @@ GLuint loadTexture(uint8_t const* data, int width, int height) {
  * Dessine un quadrilatère avec une texture donnée
 */
 void draw_quad_with_texture(GLuint textureId) {
+    glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, textureId);
     glColor3ub(255, 255, 255);
     glBegin(GL_QUADS);
