@@ -70,10 +70,33 @@ void draw_map(std::vector<Case> case_list) {
 }
 
 /**
- * Dessine les informations du level (tours, ennemis...)
+ * Dessine le bouton start / pause
  */
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
+void draw_start_button(bool is_playing, float width, float height) {
+    GLuint image_if_playing {};
+    if (is_playing) {
+        image_if_playing = loadTexture(img::load(make_absolute_path("images/level.png", true), 4, true));
+    } else {
+        image_if_playing = loadTexture(img::load(make_absolute_path("images/money.png", true), 4, true));
+    }
+    glPushMatrix();
+        glTranslatef(width/height-.25, -.85, 0);
+        glScalef(.35, .15, 1);
+        draw_quad_with_texture(image_if_playing);
+    glPopMatrix();
+}
+
+/**
+ * Dessine les informations du level et des ressources du joueur
+ */
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
     
+    // Marges
+    int tower_margin = (int)(height * 0.33);
+    int enemy_margin = (int)(height * 0.13);
+    float tower_sprite_margin = 0.3f;
+    float enemy_sprite_margin = 0.68f;
+
     // Titre
     GLuint title { loadTexture(img::load(make_absolute_path("images/towerdefense.png", true), 4, true)) };
     glPushMatrix();
@@ -84,11 +107,25 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
 
     // Informations sur l'argent
     std::stringstream stream {};
-    stream << std::fixed << "Money avalaible : " << money;
-    TextRenderer.Label(stream.str().c_str(), 100, 40, SimpleText::LEFT);
+    stream << money;
+    TextRenderer.Label(stream.str().c_str(), 100, (.28*height)/2., SimpleText::LEFT);
+    GLuint piece { loadTexture(img::load(make_absolute_path("images/money.png", true), 4, true)) };
+    glPushMatrix();
+        glTranslatef(-(width-100)/height, .74, 0);
+        glScalef(.1, .1, 1);
+        draw_quad_with_texture(piece);
+    glPopMatrix();
 
-    // Marge du haut
-    int margin = (int)(height * 0.13);
+    // Informations sur les vies
+    stream.str("");
+    stream << life;
+    TextRenderer.Label(stream.str().c_str(), 100, (.42*height)/2., SimpleText::LEFT);
+    GLuint heart { loadTexture(img::load(make_absolute_path("images/heart.png", true), 4, true)) };
+    glPushMatrix();
+        glTranslatef(-(width-100)/height, .6, 0);
+        glScalef(.11, .11, 1);
+        draw_quad_with_texture(heart);
+    glPopMatrix();
 
     // Liste de tours
     std::vector<tower> tower_examples {};
@@ -106,18 +143,18 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
     for (int i=0; i<tower_examples.size(); i++) {
         stream.str("");
         stream << std::fixed << "TOWER TYPE " << tower_type_to_string(tower_examples[i].type);
-        TextRenderer.Label(stream.str().c_str(), 100, margin + i * 120, SimpleText::LEFT);
+        TextRenderer.Label(stream.str().c_str(), 100, tower_margin + i * 120, SimpleText::LEFT);
         stream.str("");
         stream << std::fixed << "Cost : " << tower_examples[i].cost;
-        TextRenderer.Label(stream.str().c_str(), 100, margin + 20 + i * 120, SimpleText::LEFT);
+        TextRenderer.Label(stream.str().c_str(), 100, tower_margin + 20 + i * 120, SimpleText::LEFT);
         stream.str("");
         stream << std::fixed << "Damage : " << tower_examples[i].damage;
-        TextRenderer.Label(stream.str().c_str(), 100, margin + 40 + i * 120, SimpleText::LEFT);
+        TextRenderer.Label(stream.str().c_str(), 100, tower_margin + 40 + i * 120, SimpleText::LEFT);
         stream.str("");
         stream << std::fixed << "Range : " << tower_examples[i].range;
-        TextRenderer.Label(stream.str().c_str(), 100, margin + 60 + i * 120, SimpleText::LEFT);
+        TextRenderer.Label(stream.str().c_str(), 100, tower_margin + 60 + i * 120, SimpleText::LEFT);
         glPushMatrix();
-            glTranslatef(-(2*(width-100)/2)/height, .7 - (120*2/height) * i, 0);
+            glTranslatef(-(2*(width-100)/2)/height, tower_sprite_margin - (120*2/height) * i, 0);
             glScalef((2*100)/height, (2*100)/height, 1);
             draw_quad_with_texture(tower_sprites[i]);
         glPopMatrix();
@@ -127,21 +164,21 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
     for (int i=0; i<enemy_examples.size(); i++) {
         stream.str("");
         stream << std::fixed << "ENEMY TYPE " << enemy_type_to_string(enemy_examples[i].type);
-        TextRenderer.Label(stream.str().c_str(), width - 100, margin + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + i * 140, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Reward : " << enemy_examples[i].gain;
-        TextRenderer.Label(stream.str().c_str(), width - 100, margin + 20 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 20 + i * 140, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Damage : " << enemy_examples[i].damage;
-        TextRenderer.Label(stream.str().c_str(), width - 100, margin + 40 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 40 + i * 140, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Range : " << enemy_examples[i].range;
-        TextRenderer.Label(stream.str().c_str(), width - 100, margin + 60 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 60 + i * 140, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "PV : " << enemy_examples[i].pv;
-        TextRenderer.Label(stream.str().c_str(), width - 100, margin + 80 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 80 + i * 140, SimpleText::RIGHT);
         glPushMatrix();
-            glTranslatef((2*(width-100)/2)/height, .68 - (140*2/height) * i, 0);
+            glTranslatef((2*(width-100)/2)/height, enemy_sprite_margin - (140*2/height) * i, 0);
             glScalef((2*100)/height, (2*100)/height, 1);
             draw_quad_with_texture(enemy_sprites[i]);
         glPopMatrix();
