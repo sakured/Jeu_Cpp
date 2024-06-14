@@ -36,18 +36,6 @@ struct Case {
     bool is_occupied { false };
 };
 
-// Je pense que cette structure est inutile,
-// seules les fonctions "action()", "is_pressed()" et "draw_button()"
-// mais elles seront propres à chaque bouton
-struct Button {
-    unsigned int button_id {};
-    int pos_x {};
-    int pos_y {};
-
-    void action();
-    bool is_pressed();
-};
-
 std::pair<int,int> get_position_from_id(int const id);
 
 int get_id_from_position(int const pos_x, int const pos_y);
@@ -55,7 +43,6 @@ int get_id_from_position(int const pos_x, int const pos_y);
 std::pair<int, int> get_case_coordonates_from_gl_coordonates(float x, float y);
 
 std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int pos_y);
-
 
 Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list);
 

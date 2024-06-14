@@ -94,7 +94,8 @@ void App::render()
 
     // Dessin de la map et des infos
     draw_map(_tile_list);
-    draw_level_informations(1, TextRenderer, _width, _height, _money, _tower_sprites, _enemy_sprites); 
+    draw_level_informations(1, TextRenderer, _width, _height, _money, _life, _tower_sprites, _enemy_sprites); 
+    draw_start_button(_is_playing, _width, _height);
 
     // render exemple quad
     glColor3f(1.0f, 0.0f, 0.0f);
@@ -127,6 +128,7 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         std::pair<int,int> case_coordinate { (int)(xpos/(map/WIDTH_OF_MAP)) , (int)(ypos/(map/WIDTH_OF_MAP))};
         std::cout << "Case(" << case_coordinate.first << "," << case_coordinate.second << ") " << std::endl;
         
+        
         // Création d'une tour BOW à la case cliquée
         if (case_coordinate.first >= 0 && case_coordinate.first < WIDTH_OF_MAP && case_coordinate.second >= 0 && case_coordinate.second < WIDTH_OF_MAP
         && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
@@ -136,6 +138,11 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
             draw_tower(get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list));
             _money -= tower.cost;
         }
+
+        // Met à jour le bouton start / pause
+        draw_start_button(_is_playing, _width, _height);
+        if (_is_playing) _is_playing = false;
+        else _is_playing = true;
 	}
 }
 

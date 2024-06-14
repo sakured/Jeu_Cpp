@@ -45,4 +45,8 @@ private:
     SimpleText TextRenderer {};
 
     int _money {100};
+
+    int _life {150};
+
+    bool _is_playing {false};
 };
