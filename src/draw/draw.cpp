@@ -36,9 +36,6 @@ void draw_case(Case my_case) {
         case CASE_TYPE::END :
             glColor3f(OUT[0], OUT[1], OUT[2]);
             break;
-        case CASE_TYPE::TOWER :
-            glColor3f(0.0f, 1.0f, 0.0f);
-            break;
         case CASE_TYPE::ROAD :
             glColor3f(PATH[0], PATH[1], PATH[2]);
             break;

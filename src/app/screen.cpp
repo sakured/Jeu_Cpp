@@ -56,7 +56,6 @@ CASE_TYPE get_case_type_from_rgb(int r, int g, int b) {
     if (r == IN[0] && g == IN[1] && b == IN[2]) return CASE_TYPE::START;
     if (r == OUT[0] && g == OUT[1] && b == OUT[2]) return CASE_TYPE::END;
     if (r == PATH[0] && g == PATH[1] && b == PATH[2]) return CASE_TYPE::ROAD;
-    if (r == 0 && g == 255 && b == 0) return CASE_TYPE::TOWER; 
     else return CASE_TYPE::BLANK;
 }
 
