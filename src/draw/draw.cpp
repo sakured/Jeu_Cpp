@@ -4,30 +4,10 @@
 #include <tower/tower.hpp>
 #include <enemy/enemy.hpp>
 
-
-/**
- * Dessine une tour
-*/
-void draw_tower(Case my_case) {
-    GLuint sprite {};
-    glColor3f(0.f, 1.f, 0.f);
-    glPushMatrix();
-        glScalef(.8, -.8, 1);
-        glTranslatef(-1, -1, 0);
-        glBegin(GL_QUADS);
-            glVertex2f(my_case.pos_x, my_case.pos_y);
-            glVertex2f(my_case.pos_x, my_case.pos_y + SIZE_OF_CASE);
-            glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y + SIZE_OF_CASE);
-            glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y);
-        glEnd();
-        // draw_quad_with_texture(sprite);
-    glPopMatrix();
-}
-
 /**
  * Dessine une case
-*/
-void draw_case(Case my_case) {
+ */
+void draw_case(const Case & my_case) {
     // Choix de la bonne couleur
     switch (my_case.type) {
         case CASE_TYPE::START :
@@ -37,7 +17,8 @@ void draw_case(Case my_case) {
             glColor3f(OUT[0], OUT[1], OUT[2]);
             break;
         case CASE_TYPE::TOWER :
-            glColor3f(0.0f, 1.0f, 0.0f);
+            draw_tower(my_case, my_case.tower_sprite);
+            glColor3f(0.0f, 0.0f, 0.0f);
             break;
         case CASE_TYPE::ROAD :
             glColor3f(PATH[0], PATH[1], PATH[2]);
@@ -62,8 +43,8 @@ void draw_case(Case my_case) {
 
 /**
  * Dessine une map
-*/
-void draw_map(std::vector<Case> case_list) {
+ */
+void draw_map(const std::vector<Case> & case_list) {
     for (auto & my_case : case_list) {
         draw_case(my_case);
     }
@@ -81,8 +62,20 @@ void draw_start_button(bool is_playing, float width, float height) {
     }
     glPushMatrix();
         glTranslatef(width/height-.25, -.85, 0);
-        glScalef(.35, .15, 1);
+        glScalef(.35, .35, 1);
         draw_quad_with_texture(image_if_playing);
+    glPopMatrix();
+}
+
+/**
+ * Dessine une tour
+ */
+void draw_tower(const Case & my_case, const GLuint & tower_sprite) {
+    glPushMatrix();
+        glScalef(0.8, 0.8, 1);
+        glTranslatef(-1+my_case.pos_x+SIZE_OF_CASE/2, -1+my_case.pos_y+SIZE_OF_CASE/2, 0);
+        glScalef(SIZE_OF_CASE, SIZE_OF_CASE, 1);
+        draw_quad_with_texture(tower_sprite);
     glPopMatrix();
 }
 

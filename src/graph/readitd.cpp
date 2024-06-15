@@ -11,7 +11,7 @@ const char * FILE_NAME {"../../data/map1.itd"};
 
 /**
  * Lit le fichier ITD
-*/
+ */
 Graph::WeightedGraph read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path) {
     std::ifstream itd_file(FILE_NAME);
 
@@ -88,7 +88,7 @@ Graph::WeightedGraph read_ITD(std::string & map_name, std::vector<int> & in, std
 
 /**
  * Transforme la liste de noeuds extraits du fichier ITD en matrice d'adjacence du graphe
-*/
+ */
 std::vector<std::vector<float>> from_list_nodes_to_adjency_matrix(std::vector<std::vector<int>> & list_nodes, int number_of_nodes) {
     std::vector<float> adjency_line {};
     std::vector<std::vector<float>> adjency_matrix {};

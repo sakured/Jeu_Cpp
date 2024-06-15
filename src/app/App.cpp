@@ -25,7 +25,6 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 
     // Lecture du fichier ITD
     _graph = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
-    std::cout << _graph.adjacency_list.at(1).at(0).to;
 
     // Création de la liste de case
     _tile_list = create_case_list(map.data(), map.data_size());
@@ -49,10 +48,10 @@ void App::setup()
     glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
 
     // Setup the text renderer with blending enabled and white text color
-    TextRenderer.ResetFont();
-    TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
-    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
-    TextRenderer.EnableBlending(true);
+    _TextRenderer.ResetFont();
+    _TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
+    _TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
+    _TextRenderer.EnableBlending(true);
 }
 
 void App::update()
@@ -61,9 +60,6 @@ void App::update()
     const double currentTime{glfwGetTime()};
     const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;
-
-    _angle += 10.0f * elapsedTime;
-    // _angle = std::fmod(_angle, 360.0f);
 
     render();
 }
@@ -77,63 +73,63 @@ void App::render()
 
     // Dessin de la map et des infos
     draw_map(_tile_list);
-    draw_level_informations(1, TextRenderer, _width, _height, _money, _life, _tower_sprites, _enemy_sprites); 
+    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _tower_sprites, _enemy_sprites); 
     draw_start_button(_is_playing, _width, _height);
-
-    // render exemple quad
-    glColor3f(1.0f, 0.0f, 0.0f);
-
-    // Using stringstream to format the string with fixed precision
-    std::string angle_label_text{};
-    std::stringstream stream{};
-    stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
-    angle_label_text = stream.str();
-    TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
     
     // Mise à jour du texte
-    TextRenderer.Render();
+    _TextRenderer.Render();
 }
 
-void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)
+void App::key_callback(int key, int scancode, int action, int mods)
 {
+    // Choix du type de la tour à créer
+    if (key == GLFW_KEY_KP_1 && action == GLFW_PRESS) {
+        _new_tower_type = TOWER_TYPE::BOW;
+    }
+    else if (key == GLFW_KEY_KP_2 && action == GLFW_PRESS) {
+        _new_tower_type = TOWER_TYPE::CROSSBOW;
+    }
 }
 
 void App::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     // Récupération des coordonnées du curseur lors du clic
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-		double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        float vertical_margin = 0.2 * _height / 2;
-        float map = _height - 2 * vertical_margin;
-        xpos -= (_width / 2) - (map / 2);
-        ypos -= vertical_margin;
-        std::pair<int,int> case_coordinate { (int)(xpos/(map/WIDTH_OF_MAP)) , (int)(ypos/(map/WIDTH_OF_MAP))};
-        std::cout << "Case(" << case_coordinate.first << "," << case_coordinate.second << ") " << std::endl;
-        
-        
-        // Création d'une tour BOW à la case cliquée
-        if (case_coordinate.first >= 0 && case_coordinate.first < WIDTH_OF_MAP && case_coordinate.second >= 0 && case_coordinate.second < WIDTH_OF_MAP
-        && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
-            std::cout << "liiibre " << WIDTH_OF_MAP << std::endl;
-            tower tower { create_tower(case_coordinate.first, case_coordinate.second, TOWER_TYPE::BOW) };
-            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
-            draw_tower(get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list));
-            _money -= tower.cost;
-        }
+		double x, y;
+        glfwGetCursorPos(window, &x, &y);
 
         // Met à jour le bouton start / pause
         draw_start_button(_is_playing, _width, _height);
         if (_is_playing) _is_playing = false;
         else _is_playing = true;
+
+        // Récupération des coordonées de la case cliquée
+        float vertical_margin = 0.2 * _height / 2;
+        float map = _height - 2 * vertical_margin;
+        x -= (_width / 2) - (map / 2);
+        y -= vertical_margin;
+        std::pair<int,int> case_coordinate { (int)(x/(map/WIDTH_OF_MAP)) , (int)(y/(map/WIDTH_OF_MAP)) };
+        
+        
+        // Création d'une tour BOW à la case cliquée
+        if (_new_tower_type != TOWER_TYPE::NONE 
+        && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied
+        && x >= 0 && case_coordinate.first < WIDTH_OF_MAP && y >= 0 && case_coordinate.second < WIDTH_OF_MAP) {
+            tower tower { create_tower(case_coordinate.first, case_coordinate.second, _new_tower_type) };
+            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
+            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].type = CASE_TYPE::TOWER;
+            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].tower_sprite = loadTexture(img::load(make_absolute_path(get_sprite_from_type(_new_tower_type), true), 4, true));
+            _money -= tower.cost;
+            _new_tower_type = TOWER_TYPE::NONE;
+        }
 	}
 }
 
-void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
+void App::scroll_callback(double /*xoffset */, double /*yoffset */)
 {
 }
 
-void App::cursor_position_callback(double /*xpos*/, double /*ypos*/)
+void App::cursor_position_callback(double /*xpos */, double /*ypos */)
 {
 }
 

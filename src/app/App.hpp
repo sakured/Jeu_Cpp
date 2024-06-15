@@ -30,7 +30,6 @@ private:
 
     // Add your variables here
     GLuint _texture {};
-    float _angle {};
 
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};
@@ -39,11 +38,13 @@ private:
 
     std::vector<Case> _tile_list {};
 
-    SimpleText TextRenderer {};
+    SimpleText _TextRenderer {};
 
     int _money {100};
 
     int _life {150};
 
     bool _is_playing {false};
+
+    TOWER_TYPE _new_tower_type {TOWER_TYPE::NONE};
 };

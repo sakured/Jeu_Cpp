@@ -4,7 +4,7 @@
 
 /**
  * Permet d'obtenir la position (x,y) d'une cas à partir de son id
-*/
+ */
 std::pair<int,int> get_position_from_id(int const id) {
     std::pair<int,int> position {};
     position.first = id % WIDTH_OF_MAP;
@@ -14,14 +14,14 @@ std::pair<int,int> get_position_from_id(int const id) {
 
 /**
  * Permet d'obtenir l'id d'une case à partir de sa position (x,y)
-*/
+ */
 int get_id_from_position(int const pos_x, int const pos_y) {
     return (pos_y * WIDTH_OF_MAP + pos_x);
 }
 
 /**
  * Permet d'obtenir une case à partir de sa position (x,y)
-*/
+ */
 Case get_case_from_coordinates(int const pos_x, int const pos_y, std::vector<Case> list) {
     return list[get_id_from_position(pos_x, pos_y)];
 }
@@ -51,7 +51,7 @@ std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int 
 
 /**
  * Permet d'obtenir le type d'une case à partir de sa couleur (rgb)
-*/
+ */
 CASE_TYPE get_case_type_from_rgb(int r, int g, int b) {
     if (r == IN[0] && g == IN[1] && b == IN[2]) return CASE_TYPE::START;
     if (r == OUT[0] && g == OUT[1] && b == OUT[2]) return CASE_TYPE::END;
@@ -62,7 +62,7 @@ CASE_TYPE get_case_type_from_rgb(int r, int g, int b) {
 
 /**
  * Crée une liste de cases à partir d'un tableau de pixel (celui de la map de référence)
-*/ 
+ */ 
 std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
     std::vector<Case> case_list {};
     unsigned int case_id {0};
@@ -74,8 +74,8 @@ std::vector<Case> create_case_list(uint8_t *map_reference, size_t size) {
 
         CASE_TYPE case_type = get_case_type_from_rgb(map_reference[i], map_reference[i+1], map_reference[i+2]);
 
-        if (case_type == CASE_TYPE::BLANK) case_list.push_back({case_id, pos_x, pos_y, case_type, true});
-        else case_list.push_back({case_id, pos_x, pos_y, case_type, false});
+        if (case_type == CASE_TYPE::BLANK) case_list.push_back({case_id, pos_x, pos_y, case_type, false});
+        else case_list.push_back({case_id, pos_x, pos_y, case_type, true});
 
         case_id++;
     }

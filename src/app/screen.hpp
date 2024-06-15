@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <stdint.h>
+#include <tower/tower.hpp>
+#include <glad/glad.h>
 
 #pragma once
 
@@ -35,6 +37,7 @@ struct Case {
     float pos_y {};
     CASE_TYPE type {};
     bool is_occupied { false };
+    GLuint tower_sprite {};
 };
 
 std::pair<int,int> get_position_from_id(int const id);

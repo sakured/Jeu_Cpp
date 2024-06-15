@@ -4,7 +4,7 @@
 
 /**
  * Télécharge une texture
-*/
+ */
 GLuint loadTexture(uint8_t const* data, int width, int height) {
     GLuint textureId {};
 
@@ -27,7 +27,7 @@ GLuint loadTexture(uint8_t const* data, int width, int height) {
 
 /**
  * Dessine un quadrilatère avec une texture donnée
-*/
+ */
 void draw_quad_with_texture(GLuint textureId) {
     glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);

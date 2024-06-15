@@ -3,7 +3,8 @@
 
 enum class TOWER_TYPE {
     BOW,
-    CROSSBOW
+    CROSSBOW,
+    NONE
 };
 
 static const TOWER_TYPE ALL_TOWER_TYPES[] = {TOWER_TYPE::BOW, TOWER_TYPE::CROSSBOW};

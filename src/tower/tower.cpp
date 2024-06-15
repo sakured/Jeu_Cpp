@@ -2,7 +2,7 @@
 
 /**
  * Crée une tour selon un type donné
-*/
+ */
 tower create_tower(int pos_x, int pos_y, TOWER_TYPE type) {
     tower tower {};
 
@@ -32,7 +32,7 @@ std::string get_sprite_from_type(TOWER_TYPE type) {
 
 /**
  * Récupère le nom du type de la tour
-*/
+ */
 std::string tower_type_to_string(TOWER_TYPE type) {
     std::string string_type {};
 

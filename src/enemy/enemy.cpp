@@ -2,7 +2,7 @@
 
 /**
  * Crée un ennemi d'un type donné
-*/
+ */
 enemy create_enemy(int pos_x, int pos_y, ENEMY_TYPE type) {
     enemy enemy {};
 
@@ -35,7 +35,7 @@ std::string get_sprite_from_type(ENEMY_TYPE type) {
 
 /**
  * Récupère le nom du type de l'ennemi'
-*/
+ */
 std::string enemy_type_to_string(ENEMY_TYPE type) {
     std::string string_type {};
 
