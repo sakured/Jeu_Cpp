@@ -45,4 +45,4 @@ namespace Graph {
 
 std::pair<Graph::WeightedGraph, std::unordered_map<int, std::pair<int, int>>> read_ITD(std::string & map_name, std::vector<int> & in, std::vector<int> & out, std::vector<int> & path);
 std::vector<std::vector<float>> from_list_nodes_to_adjency_matrix(std::vector<std::vector<int>> & list_nodes, int number_of_nodes);
-std::unordered_map<int, std::pair<int, int>> find_path(Graph::WeightedGraph graph, std::unordered_map<int, std::pair<int, int>> nodes_positions, int const start, int const end);
+std::vector<std::pair<int, int>> find_path(Graph::WeightedGraph graph, std::unordered_map<int, std::pair<int, int>> nodes_positions, int const start, int const end);

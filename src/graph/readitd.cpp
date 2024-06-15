@@ -136,19 +136,21 @@ std::vector<std::vector<float>> from_list_nodes_to_adjency_matrix(std::vector<st
  * @param nodes_positions 
  * @return std::unordered_map<int, std::pair<int, int>> 
  */
-std::unordered_map<int, std::pair<int, int>> find_path(Graph::WeightedGraph graph, std::unordered_map<int, std::pair<int, int>> nodes_positions, int const start, int const end) {
+std::vector<std::pair<int, int>> find_path(Graph::WeightedGraph graph, std::unordered_map<int, std::pair<int, int>> nodes_positions, int const start, int const end) {
     auto shortest_paths = dijkstra(graph, start, end);
-    std::unordered_map<int, std::pair<int, int>> path {};
+    std::vector<std::pair<int, int>> path {};
 
     int current_node {end};
 
     while (current_node != start) {
-        path.insert({current_node, {nodes_positions.at(current_node)}});
+        path.push_back({nodes_positions.at(current_node)});
 
         current_node = shortest_paths.at(current_node).second;
     }
     
-    path.insert({start, {nodes_positions.at(start)}});
+    path.push_back({nodes_positions.at(start)});
+
+    std::reverse(path.begin(), path.end());
 
     return path; 
 }

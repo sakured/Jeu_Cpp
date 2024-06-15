@@ -37,7 +37,7 @@ private:
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};
 
-    std::unordered_map<int, std::pair<int, int>> _path;
+    std::vector<std::pair<int, int>> _path;
 
     std::vector<Case> _tile_list {};
 
