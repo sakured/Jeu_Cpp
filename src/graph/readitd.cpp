@@ -39,7 +39,7 @@ std::pair<Graph::WeightedGraph, std::unordered_map<int, std::pair<int, int>>> re
 
             // récupération du nom du fichier de la map
             if (vec_line[0] == "map") {
-                map_name = vec_line[1];
+                map_name = "images/" + vec_line[1];
             }
 
             // nombre de noeuds

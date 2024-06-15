@@ -48,7 +48,6 @@ std::pair<float, float> get_gl_coordonates_from_case_coordonates(int pos_x, int 
     return std::make_pair((float)(pos_x*SIZE_OF_CASE + START_OF_MAP_X), (float)(pos_y*SIZE_OF_CASE + START_OF_MAP_Y));
 }
 
-
 /**
  * Permet d'obtenir le type d'une case à partir de sa couleur (rgb)
  */
