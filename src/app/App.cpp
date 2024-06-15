@@ -23,6 +23,9 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // Télécharge l'image de la map
     img::Image map {img::load(make_absolute_path("images/map.png", true), 3, true)};
 
+    // Lecture du fichier ITD
+    auto itd = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
+
     // Création de la liste de case
     _tile_list = create_case_list(map.data(), map.data_size());
 
@@ -32,8 +35,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
         if (tile.type == CASE_TYPE::END) _out_pos = {tile.pos_x, tile.pos_y};
     }
 
-    // Lecture du fichier ITD
-    auto itd = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
+    // Création du chemin pour les ennemis
     auto graph = itd.first;
     auto node_positions = itd.second;
     int start {};
