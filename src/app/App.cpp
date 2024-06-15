@@ -23,11 +23,28 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // Télécharge l'image de la map
     img::Image map {img::load(make_absolute_path("images/map.png", true), 3, true)};
 
-    // Lecture du fichier ITD
-    _graph = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
-
     // Création de la liste de case
     _tile_list = create_case_list(map.data(), map.data_size());
+
+    // Recherche du des positions du début et de la fin
+    for (auto & tile : _tile_list) {
+        if (tile.type == CASE_TYPE::START) _in_pos = {tile.pos_x, tile.pos_y};
+        if (tile.type == CASE_TYPE::END) _out_pos = {tile.pos_x, tile.pos_y};
+    }
+
+    // Lecture du fichier ITD
+    auto itd = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
+    auto graph = itd.first;
+    auto node_positions = itd.second;
+    int start {};
+    int end {};
+
+    for (auto it {node_positions.begin()}; it != node_positions.end(); it++) {
+        if (it->second == _in_pos) start = it->first;
+        if (it->second == _out_pos) end = it->first;
+    }
+
+    _path = find_path(graph, node_positions, start, end);
 
     // Tower sprites
     for (auto & tower_type : ALL_TOWER_TYPES) {
@@ -56,7 +73,6 @@ void App::setup()
 
 void App::update()
 {
-
     const double currentTime{glfwGetTime()};
     const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;

@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <simpletext.h>
 #include "screen.hpp"
-#include "graph\graph.hpp"
+#include <unordered_map>
 
 class App {
 public:
@@ -28,13 +28,16 @@ private:
     double _previousTime {};
     float _viewSize {};
 
+    std::pair<int, int> _in_pos;
+    std::pair<int, int> _out_pos;
+
     // Add your variables here
     GLuint _texture {};
 
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};
 
-    Graph::WeightedGraph _graph;
+    std::unordered_map<int, std::pair<int, int>> _path;
 
     std::vector<Case> _tile_list {};
 
