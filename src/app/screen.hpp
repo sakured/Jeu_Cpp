@@ -27,6 +27,7 @@ enum class CASE_TYPE {
     START,
     END,
     ROAD,
+    TOWER,
     BLANK,
 };
 
