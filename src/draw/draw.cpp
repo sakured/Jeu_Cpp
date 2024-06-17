@@ -100,6 +100,19 @@ void draw_enemies(const std::vector<enemy> enemies, std::vector<GLuint> & enemy_
 }
 
 /**
+ * Dessine l'écran de game over
+ */
+void draw_game_over() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    img::Image game_over {img::load(make_absolute_path("images/gameover.png", true), 4, true)};
+    glPushMatrix();
+        glScalef(2.5, .5, 1);
+        draw_quad_with_texture(loadTexture(game_over));  
+    glPopMatrix();
+}
+
+/**
  * Dessine les informations du level et des ressources du joueur
  */
 void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {

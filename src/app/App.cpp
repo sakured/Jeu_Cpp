@@ -79,28 +79,37 @@ void App::setup()
 
 void App::update()
 {
-    const double currentTime{glfwGetTime()};
-    const double elapsedTime{currentTime - _previousTime};
-    _previousTime = currentTime;
+    // Check si le joueur a perdu
+    if (_life <= 0) {
+        _is_playing = false;
+        draw_game_over();
+    
+    // Sinon
+    } else {
+        const double currentTime{glfwGetTime()};
+        const double elapsedTime{currentTime - _previousTime};
+        _previousTime = currentTime;
 
-    // Actions des ennemis
-    std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
-    for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
-        // L'ennemi attaque s'il est sur le dernier noeud
-        if (it->attacking) {
-            _life -= it->damage;
-            if (it->type == ENEMY_TYPE::BOMBER) {
-                to_kill.push_back(it);
+        // Actions des ennemis
+        std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
+        for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+            // L'ennemi attaque s'il est sur le dernier noeud
+            if (it->attacking) {
+                _life -= it->damage;
+                if (it->type == ENEMY_TYPE::BOMBER) {
+                    to_kill.push_back(it);
+                }
+            }
+            // Sinon il se déplace
+            else {
+                it->update_position();         
+                it->update_direction(_path);
             }
         }
-        // Sinon il se déplace
-        else {
-            it->update_position();         
-            it->update_direction(_path);
-        }
-    }
 
-    render();
+        // Mise à jour de la map
+        render();
+    }
 }
 
 void App::render()
@@ -122,12 +131,14 @@ void App::render()
 
 void App::key_callback(int key, int scancode, int action, int mods)
 {
-    std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2};
+    std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2, GLFW_KEY_KP_3, GLFW_KEY_KP_4, GLFW_KEY_KP_5};
 
     // Choix du type de la tour à créer selon la touche cliquée
-    for (int i=0; i<NUMBER_OF_TOWER_TYPE; i++) {
-        if (key == key_list[i] && action == GLFW_PRESS) {
-            _new_tower_type = ALL_TOWER_TYPES[i];
+    if (_is_playing) {
+        for (int i=0; i<NUMBER_OF_TOWER_TYPE; i++) {
+            if (key == key_list[i] && action == GLFW_PRESS) {
+                _new_tower_type = ALL_TOWER_TYPES[i];
+            }
         }
     }
 }
