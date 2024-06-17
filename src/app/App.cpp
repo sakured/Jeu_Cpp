@@ -42,11 +42,20 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     int end {};
 
     for (auto it {node_positions.begin()}; it != node_positions.end(); it++) {
-        if (it->second == _in_pos) start = it->first;
-        if (it->second == _out_pos) end = it->first;
+        if (it->second == get_case_coordonates_from_gl_coordonates(_in_pos.first, _in_pos.second)) start = it->first;
+
+        if (it->second == get_case_coordonates_from_gl_coordonates(_out_pos.first, _out_pos.second)) end = it->first;
     }
 
-    _path = find_path(graph, node_positions, start, end);
+    std::vector<std::pair<int, int>> path = find_path(graph, node_positions, start, end);
+
+    for (auto & node_coord : path) {
+        _path.push_back(get_gl_coordonates_from_case_coordonates(node_coord.first, node_coord.second));
+    }
+    
+    // Création de la liste des ennemis
+    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::BOMBER));
+    
 
     // Tower sprites
     for (auto & tower_type : ALL_TOWER_TYPES) {
@@ -79,6 +88,23 @@ void App::update()
     const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;
 
+    // Actions des ennemis
+    for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+        // L'ennemi attaque s'il est sur le dernier noeud
+        if ((*it).attacking) {
+            _life -= (*it).damage;
+            if ((*it).type == ENEMY_TYPE::BOMBER) {
+                _enemy_list.erase(it);
+                (*it).kill();
+            }
+        }
+        // Sinon il se déplace
+        else {
+            (*it).update_position();         
+            (*it).update_direction(_path);
+        }
+    }
+
     render();
 }
 
@@ -93,6 +119,7 @@ void App::render()
     draw_map(_tile_list);
     draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _tower_sprites, _enemy_sprites); 
     draw_start_button(_is_playing, _width, _height);
+    draw_enemies(_enemy_list, _enemy_sprites);
     
     // Mise à jour du texte
     _TextRenderer.Render();

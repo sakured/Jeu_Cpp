@@ -5,6 +5,8 @@
 #include <simpletext.h>
 #include "screen.hpp"
 #include <unordered_map>
+#include "../tower/tower.hpp"
+#include "../enemy/enemy.hpp"
 
 class App {
 public:
@@ -28,8 +30,8 @@ private:
     double _previousTime {};
     float _viewSize {};
 
-    std::pair<int, int> _in_pos;
-    std::pair<int, int> _out_pos;
+    std::pair<float, float> _in_pos;
+    std::pair<float, float> _out_pos;
 
     // Add your variables here
     GLuint _texture {};
@@ -37,7 +39,10 @@ private:
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};
 
-    std::vector<std::pair<int, int>> _path;
+    std::vector<enemy> _enemy_list {};
+    std::vector<tower> _tower_list {};
+
+    std::vector<std::pair<float, float>> _path;
 
     std::vector<Case> _tile_list {};
 

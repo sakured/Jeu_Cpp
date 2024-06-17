@@ -79,6 +79,18 @@ void draw_tower(const Case & my_case, const GLuint & tower_sprite) {
     glPopMatrix();
 }
 
+
+void draw_enemy(enemy enemy, const GLuint & enemy_sprite) {
+    
+}
+
+void draw_enemies(const std::vector<enemy> enemies, std::vector<GLuint> & enemy_sprites) {
+    for (auto & enemy : enemies) {
+        draw_enemy(enemy, enemy_sprites[(int)enemy.type]);
+    }    
+}
+
+
 /**
  * Dessine les informations du level et des ressources du joueur
  */
