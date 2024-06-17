@@ -23,7 +23,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     auto itd = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
 
     // Télécharge l'image de la map
-    img::Image map {img::load(make_absolute_path(MAP_FILE_NAME, true), 3, true)};
+    img::Image map {img::load(make_absolute_path(MAP_FILE_NAME, true), 3, false)};
 
     // Création de la liste de case
     _tile_list = create_case_list(map.data(), map.data_size());
@@ -37,14 +37,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // Création du chemin pour les ennemis
     auto graph = itd.first;
     auto node_positions = itd.second;
-    int start {};
-    int end {};
-
-    for (auto it {node_positions.begin()}; it != node_positions.end(); it++) {
-        if (it->second == get_case_coordonates_from_gl_coordonates(_in_pos.first, _in_pos.second)) start = it->first;
-
-        if (it->second == get_case_coordonates_from_gl_coordonates(_out_pos.first, _out_pos.second)) end = it->first;
-    }
+    int start {0};
+    int end {(int)node_positions.size()-1};
 
     std::vector<std::pair<int, int>> path = find_path(graph, node_positions, start, end);
 
@@ -154,8 +148,7 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         y -= vertical_margin;
         std::pair<int,int> case_coordinate { (int)(x/(map/WIDTH_OF_MAP)) , (int)(y/(map/WIDTH_OF_MAP)) };
         
-        
-        // Création d'une tour BOW à la case cliquée
+        // Création d'une tour à la case cliquée
         if (_new_tower_type != TOWER_TYPE::NONE 
         && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied
         && x >= 0 && case_coordinate.first < WIDTH_OF_MAP && y >= 0 && case_coordinate.second < WIDTH_OF_MAP) {
