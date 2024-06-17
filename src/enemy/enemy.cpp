@@ -33,18 +33,27 @@ void enemy::update_position() {
  * Met à jour la direction de l'ennemi pour le chemin
  */
 void enemy::update_direction(std::vector<std::pair<float, float>> path) {
-    if (this->facing == DIRECTION::LEFT || this->facing == DIRECTION::UP) {
-        if (path[this->current_node].first <= path[this->current_node+1].first || path[this->current_node].second <= path[this->current_node+1].second) {
-            this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
-            this->current_node++;
-            this->attacking = (this->current_node == path.size()-1);
-        }
-    } else if (this->facing == DIRECTION::RIGHT || this->facing == DIRECTION::DOWN) {
-        if (path[this->current_node].first >= path[this->current_node+1].first || path[this->current_node].second >= path[this->current_node+1].second) {
-            this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
-            this->current_node++;
-            this->attacking = (this->current_node == path.size()-1);
-        }
+    bool update {false};
+    switch (this->facing) {
+    case DIRECTION::LEFT :
+        update = path[this->current_node].first >= path[this->current_node+1].first;
+        break;
+    case DIRECTION::DOWN :
+        update = path[this->current_node].second >= path[this->current_node+1].second;
+        break;
+    case DIRECTION::RIGHT :
+        update = path[this->current_node].first <= path[this->current_node+1].first;
+        break;
+    case DIRECTION::UP :
+        update = path[this->current_node].second <= path[this->current_node+1].second;
+        break;
+    default:
+        break;
+    }
+    if (update) {
+        this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
+        this->current_node++;
+        this->attacking = (this->current_node == path.size()-1);
     }
 }
 

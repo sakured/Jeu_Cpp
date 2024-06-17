@@ -83,21 +83,21 @@ void App::update()
     _previousTime = currentTime;
 
     // Actions des ennemis
-    // for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
-    //     // L'ennemi attaque s'il est sur le dernier noeud
-    //     if ((*it).attacking) {
-    //         _life -= (*it).damage;
-    //         if ((*it).type == ENEMY_TYPE::BOMBER) {
-    //             _enemy_list.erase(it);
-    //             (*it).kill();
-    //         }
-    //     }
-    //     // Sinon il se déplace
-    //     else {
-    //         (*it).update_position();         
-    //         (*it).update_direction(_path);
-    //     }
-    // }
+    for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+        // L'ennemi attaque s'il est sur le dernier noeud
+        if (it->attacking) {
+            _life -= it->damage;
+            if (it->type == ENEMY_TYPE::BOMBER) {
+                _enemy_list.erase(it);
+                it->kill();
+            }
+        }
+        // Sinon il se déplace
+        else {
+            it->update_position();         
+            it->update_direction(_path);
+        }
+    }
 
     render();
 }
