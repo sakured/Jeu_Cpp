@@ -99,6 +99,12 @@ void App::update()
         }
     }
 
+    // Check si le joueur a perdu
+    if (_life <= 0) {
+        img::Image game_over {img::load(make_absolute_path("image/heart.png", true), 4, true)};
+        draw_quad_with_texture(loadTexture(game_over));
+    }
+
     render();
 }
 
