@@ -8,16 +8,13 @@
  * Dessine une case
  */
 void draw_case(const Case & my_case) {
-    // Choix de la bonne couleur
+    // Choix de la bonne couleur de la case
     switch (my_case.type) {
         case CASE_TYPE::START :
             glColor3f(IN[0], IN[1], IN[2]);
             break;
         case CASE_TYPE::END :
             glColor3f(OUT[0], OUT[1], OUT[2]);
-            break;
-        case CASE_TYPE::TOWER :
-            glColor3f(0.0f, 0.0f, 0.0f);
             break;
         case CASE_TYPE::ROAD :
             glColor3f(PATH[0], PATH[1], PATH[2]);
@@ -102,7 +99,6 @@ void draw_enemies(const std::vector<enemy> enemies, std::vector<GLuint> & enemy_
     }    
 }
 
-
 /**
  * Dessine les informations du level et des ressources du joueur
  */
@@ -181,21 +177,24 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
     for (int i=0; i<enemy_examples.size(); i++) {
         stream.str("");
         stream << std::fixed << "ENEMY TYPE " << enemy_type_to_string(enemy_examples[i].type);
-        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + i * 160, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Reward : " << enemy_examples[i].gain;
-        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 20 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 20 + i * 160, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Damage : " << enemy_examples[i].damage;
-        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 40 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 40 + i * 160, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "Range : " << enemy_examples[i].range;
-        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 60 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 60 + i * 160, SimpleText::RIGHT);
         stream.str("");
         stream << std::fixed << "PV : " << enemy_examples[i].pv;
-        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 80 + i * 140, SimpleText::RIGHT);
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 80 + i * 160, SimpleText::RIGHT);
+        stream.str("");
+        stream << std::fixed << "Speed : " << enemy_examples[i].speed_label;
+        TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 100 + i * 160, SimpleText::RIGHT);
         glPushMatrix();
-            glTranslatef((2*(width-100)/2)/height, enemy_sprite_margin - (140*2/height) * i, 0);
+            glTranslatef((2*(width-100)/2)/height, enemy_sprite_margin - (165*2/height) * i, 0);
             glScalef((2*100)/height, (2*100)/height, 1);
             draw_quad_with_texture(enemy_sprites[i]);
         glPopMatrix();
