@@ -59,3 +59,25 @@ std::string tower_type_to_string(TOWER_TYPE type) {
 
     return string_type;
 }
+
+/**
+ * Récupère le coût du type de la tour
+ */
+int get_cost_from_type(TOWER_TYPE type) {
+    int cost {};
+
+    switch (type) {
+        case TOWER_TYPE::BOW:
+            cost = 50;
+            break;
+            
+        case TOWER_TYPE::CROSSBOW:
+            cost = 75;
+            break;
+
+        default:
+            break;
+    }
+
+    return cost;
+}

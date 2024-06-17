@@ -17,6 +17,9 @@
 #include "../tower/tower.hpp"
 #include "../enemy/enemy.hpp"
 
+// Liste des touches à cliquer pour créer des tours de différents types
+std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2, GLFW_KEY_KP_3, GLFW_KEY_KP_4, GLFW_KEY_KP_5};
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // Lecture du fichier ITD
@@ -152,7 +155,7 @@ void App::render()
 
 void App::key_callback(int key, int scancode, int action, int mods)
 {
-    std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2, GLFW_KEY_KP_3, GLFW_KEY_KP_4, GLFW_KEY_KP_5};
+    
 
     // Choix du type de la tour à créer selon la touche cliquée
     if (_is_playing) {
@@ -184,13 +187,14 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         std::pair<int,int> case_coordinate { (int)(x/(map/WIDTH_OF_MAP)) , (int)(y/(map/WIDTH_OF_MAP)) };
         
         // Création d'une tour à la case cliquée
-        if (_new_tower_type != TOWER_TYPE::NONE 
+        if (_new_tower_type != TOWER_TYPE::NONE && _money >= get_cost_from_type(_new_tower_type) 
         && x >= 0 && case_coordinate.first < WIDTH_OF_MAP && y >= 0 && case_coordinate.second < WIDTH_OF_MAP
         && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
             tower tower { create_tower(case_coordinate.first, case_coordinate.second, _new_tower_type) };
-            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
-            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].type = CASE_TYPE::TOWER;
-            _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].tower_sprite = loadTexture(img::load(make_absolute_path(get_sprite_from_type(_new_tower_type), true), 4, true));
+            int id { get_id_from_position(case_coordinate.first, case_coordinate.second) };
+            _tile_list[id].is_occupied = true;
+            _tile_list[id].type = CASE_TYPE::TOWER;
+            _tile_list[id].tower_sprite = loadTexture(img::load(make_absolute_path(get_sprite_from_type(_new_tower_type), true), 4, true));
             _money -= tower.cost;
             _new_tower_type = TOWER_TYPE::NONE;
             _tower_list.push_back(tower);
