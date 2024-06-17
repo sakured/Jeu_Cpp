@@ -29,6 +29,7 @@ private:
     int _height {};
     double _previousTime {};
     float _viewSize {};
+    unsigned int _n_tic {};
 
     std::pair<float, float> _in_pos;
     std::pair<float, float> _out_pos;

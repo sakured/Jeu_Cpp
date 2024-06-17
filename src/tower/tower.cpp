@@ -1,5 +1,13 @@
 #include "tower.hpp"
 
+bool tower::in_range(std::pair<int, int> pos_enemy) {
+    if ((pos_enemy.first <= this->pos_x + (int)this->range) && (pos_enemy.second <= this->pos_x + (int)this->range)) return true;
+    else if ((pos_enemy.first <= this->pos_x - (int)this->range) && (pos_enemy.second <= this->pos_x + (int)this->range)) return true;
+    else if ((pos_enemy.first <= this->pos_x + (int)this->range) && (pos_enemy.second <= this->pos_x - (int)this->range)) return true;
+    else if ((pos_enemy.first <= this->pos_x - (int)this->range) && (pos_enemy.second <= this->pos_x - (int)this->range)) return true;
+    else return false;
+}
+
 /**
  * Crée une tour selon un type donné
  */

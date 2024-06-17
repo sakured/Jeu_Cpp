@@ -83,14 +83,17 @@ void App::update()
     const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;
 
-    // Actions des ennemis
+    _n_tic++;
+
     std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
+    
+    // Actions des ennemis
     for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
         // L'ennemi attaque s'il est sur le dernier noeud
         if (it->attacking) {
-            _life -= it->damage;
-            if (it->type == ENEMY_TYPE::BOMBER) {
-                to_kill.push_back(it);
+            if (_n_tic % it->pace == 0) {
+                if (it->type == ENEMY_TYPE::BOMBER) to_kill.push_back(it);
+                _life -= it->damage;
             }
         }
         // Sinon il se déplace
@@ -99,6 +102,24 @@ void App::update()
             it->update_direction(_path);
         }
     }
+
+    // Tri des ennemis dans l'ordre
+
+    // Action des tours
+    for (auto & tower : _tower_list) {
+        for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+            if ((_n_tic % it->pace == 0) && tower.in_range(get_case_coordonates_from_gl_coordonates(it->pos_x, it->pos_y))) {
+                it->pv -= tower.damage;
+                _money += it->gain;
+                if (it->pv <= 0) to_kill.push_back(it);
+            }   
+        }
+    }
+    
+    for (auto & enemy_it : to_kill) {
+        _enemy_list.erase(enemy_it);
+    }
+    
 
     render();
 }
@@ -161,6 +182,7 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
             _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].tower_sprite = loadTexture(img::load(make_absolute_path(get_sprite_from_type(_new_tower_type), true), 4, true));
             _money -= tower.cost;
             _new_tower_type = TOWER_TYPE::NONE;
+            _tower_list.push_back(tower);
         }
 	}
 }

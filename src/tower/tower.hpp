@@ -23,6 +23,8 @@ struct tower {
     unsigned int damage;
     unsigned int range;
     unsigned int pace;
+
+    bool in_range(std::pair<int, int> pos_enemy);
 };
 
 tower create_tower(int pos_x, int pos_y, TOWER_TYPE type);
