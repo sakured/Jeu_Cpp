@@ -8,10 +8,11 @@ enum class ENEMY_TYPE {
     BOMBER
 };
 
-static const ENEMY_TYPE ALL_ENEMY_TYPES[] = {ENEMY_TYPE::ARCHER, ENEMY_TYPE::KNIGHT, ENEMY_TYPE::BOMBER};
+static const int NUMBER_OF_ENEMY_TYPE = 3;
 
-static const std::string ALL_ENEMY_SPRITES[] = {"images/Enemies/body_tracks.gif", "images/Enemies/body_halftrack.gif", "images/Enemies/body_tracks.gif"};
+static const ENEMY_TYPE ALL_ENEMY_TYPES[NUMBER_OF_ENEMY_TYPE] = {ENEMY_TYPE::ARCHER, ENEMY_TYPE::KNIGHT, ENEMY_TYPE::BOMBER};
 
+static const std::string ALL_ENEMY_SPRITES[NUMBER_OF_ENEMY_TYPE] = {"images/Enemies/body_tracks.gif", "images/Enemies/body_halftrack.gif", "images/Enemies/body_tracks.gif"};
 
 enum class DIRECTION {
     UP,
@@ -19,7 +20,6 @@ enum class DIRECTION {
     RIGHT,
     LEFT,
 };
-
 
 struct enemy {
     ENEMY_TYPE type {};
@@ -31,7 +31,8 @@ struct enemy {
     unsigned int damage {};
     unsigned int range {};
     unsigned int pace {};
-    unsigned int speed {};
+    float speed {};
+    std::string speed_label {};
     int pv {};
 
     bool attacking {false};

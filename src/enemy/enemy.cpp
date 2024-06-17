@@ -1,9 +1,15 @@
 #include "enemy.hpp"
 
+/**
+ * Tue l'ennemi
+ */
 void enemy::kill() {
     delete this;
 }
 
+/**
+ * Met à jour la direction de l'ennemi
+ */
 void enemy::update_position() {
     switch (this->facing) {
     case DIRECTION::DOWN :
@@ -23,6 +29,9 @@ void enemy::update_position() {
     }
 }
 
+/**
+ * Met à jour la direction de l'ennemi pour le chemin
+ */
 void enemy::update_direction(std::vector<std::pair<float, float>> path) {
     bool update {false};
     int range = this->current_node+1 != path.size() ? 0 : this->range; // Si le prochain noeud est le dernier, il faut prendre la range en compte
@@ -58,15 +67,15 @@ enemy create_enemy(float pos_x, float pos_y, ENEMY_TYPE type) {
 
     switch (type) {
         case ENEMY_TYPE::ARCHER:
-            enemy = {type, pos_x, pos_y, 10, 2, 4, 5, 10, 50};
+            enemy = {type, pos_x, pos_y, 10, 2, 4, 5, 0.01, "average", 50};
             break;
         
         case ENEMY_TYPE::KNIGHT:
-            enemy = {type, pos_x, pos_y, 12, 4, 1, 3, 8, 100};
+            enemy = {type, pos_x, pos_y, 12, 4, 1, 3, 0.005, "slow", 100};
             break;
 
         case ENEMY_TYPE::BOMBER:
-            enemy = {type, pos_x, pos_y, 8, 10, 1, 3, 15, 20};
+            enemy = {type, pos_x, pos_y, 8, 10, 1, 3, 0.02, "fast", 20};
             break;
 
         default:
@@ -84,7 +93,7 @@ std::string get_sprite_from_type(ENEMY_TYPE type) {
 }
 
 /**
- * Récupère le nom du type de l'ennemi'
+ * Récupère le nom du type de l'ennemi
  */
 std::string enemy_type_to_string(ENEMY_TYPE type) {
     std::string string_type {};
@@ -109,7 +118,9 @@ std::string enemy_type_to_string(ENEMY_TYPE type) {
     return string_type;
 }
 
-
+/**
+ * Calcule la direction à prendre par l'ennemi
+ */
 DIRECTION calculate_direction(std::pair<float, float> current_node_coord, std::pair<float, float> next_node_coord) {
     if ((current_node_coord.first - next_node_coord.first) < 0) return DIRECTION::RIGHT;
     else if ((current_node_coord.first - next_node_coord.first) > 0) return DIRECTION::LEFT;

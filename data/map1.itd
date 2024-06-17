@@ -3,10 +3,10 @@ ITD
 map map.png
 # Blanc
 path 255 255 255
-# Bleu
-out 0 0 255
 # Rouge
 in 255 0 0
+# Bleu
+out 0 0 255
 graph 9
 node 0 4 2 1
 node 1 4 6 2

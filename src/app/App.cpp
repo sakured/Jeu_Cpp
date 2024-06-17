@@ -40,8 +40,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     int start {0};
     int end {(int)node_positions.size()-1};
 
+    // Obtention du chemin des ennemis
     std::vector<std::pair<int, int>> path = find_path(graph, node_positions, start, end);
 
+    // Obtention les coordonnées des noeuds du chemin des ennemis
     for (auto & node_coord : path) {
         _path.push_back(get_gl_coordonates_from_case_coordonates(node_coord.first, node_coord.second));
     }
@@ -98,12 +100,6 @@ void App::update()
         }
     }
 
-    // Tue les ennemis à tuer
-    for (auto && enemy_it : to_kill) {
-        _enemy_list.erase(enemy_it);
-    }
-    
-
     render();
 }
 
@@ -126,12 +122,13 @@ void App::render()
 
 void App::key_callback(int key, int scancode, int action, int mods)
 {
-    // Choix du type de la tour à créer
-    if (key == GLFW_KEY_KP_1 && action == GLFW_PRESS) {
-        _new_tower_type = TOWER_TYPE::BOW;
-    }
-    else if (key == GLFW_KEY_KP_2 && action == GLFW_PRESS) {
-        _new_tower_type = TOWER_TYPE::CROSSBOW;
+    std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2};
+
+    // Choix du type de la tour à créer selon la touche cliquée
+    for (int i=0; i<NUMBER_OF_TOWER_TYPE; i++) {
+        if (key == key_list[i] && action == GLFW_PRESS) {
+            _new_tower_type = ALL_TOWER_TYPES[i];
+        }
     }
 }
 

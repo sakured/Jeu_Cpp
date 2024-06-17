@@ -7,9 +7,11 @@ enum class TOWER_TYPE {
     NONE
 };
 
-static const TOWER_TYPE ALL_TOWER_TYPES[] = {TOWER_TYPE::BOW, TOWER_TYPE::CROSSBOW};
+static const int NUMBER_OF_TOWER_TYPE = 2;
 
-static const std::string ALL_TOWER_SPRITES[] = {"images/Towers/turret_01_mk1.gif", "images/Towers/turret_02_mk1.gif"};
+static const TOWER_TYPE ALL_TOWER_TYPES[NUMBER_OF_TOWER_TYPE] = {TOWER_TYPE::BOW, TOWER_TYPE::CROSSBOW};
+
+static const std::string ALL_TOWER_SPRITES[NUMBER_OF_TOWER_TYPE] = {"images/Towers/turret_01_mk1.gif", "images/Towers/turret_02_mk1.gif"};
 
 struct tower {
     TOWER_TYPE type;
@@ -21,10 +23,8 @@ struct tower {
     unsigned int damage;
     unsigned int range;
     unsigned int pace;
-
 };
 
-// Crée une nouvelle tour selon une position et un type
 tower create_tower(int pos_x, int pos_y, TOWER_TYPE type);
 
 std::string get_sprite_from_type(TOWER_TYPE type);
