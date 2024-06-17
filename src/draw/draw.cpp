@@ -17,7 +17,6 @@ void draw_case(const Case & my_case) {
             glColor3f(OUT[0], OUT[1], OUT[2]);
             break;
         case CASE_TYPE::TOWER :
-            draw_tower(my_case, my_case.tower_sprite);
             glColor3f(0.0f, 0.0f, 0.0f);
             break;
         case CASE_TYPE::ROAD :
@@ -39,6 +38,9 @@ void draw_case(const Case & my_case) {
             glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y);
         glEnd();
     glPopMatrix();
+
+    // Dessin de la tour s'il y en a une
+    if (my_case.type == CASE_TYPE::TOWER) draw_tower(my_case, my_case.tower_sprite);
 }
 
 /**
@@ -73,17 +75,27 @@ void draw_start_button(bool is_playing, float width, float height) {
 void draw_tower(const Case & my_case, const GLuint & tower_sprite) {
     glPushMatrix();
         glScalef(0.8, 0.8, 1);
-        glTranslatef(-1+my_case.pos_x+SIZE_OF_CASE/2, -1+my_case.pos_y+SIZE_OF_CASE/2, 0);
+        glTranslatef(-1+my_case.pos_x+SIZE_OF_CASE/2, 1-my_case.pos_y-SIZE_OF_CASE/2, 0);
         glScalef(SIZE_OF_CASE, SIZE_OF_CASE, 1);
         draw_quad_with_texture(tower_sprite);
     glPopMatrix();
 }
 
-
+/**
+ * Dessine un ennemi
+ */
 void draw_enemy(enemy enemy, const GLuint & enemy_sprite) {
-    
+    glPushMatrix();
+        glScalef(0.8, 0.8, 1);
+        glTranslatef(-1+enemy.pos_x+SIZE_OF_CASE/2, 1-enemy.pos_y-SIZE_OF_CASE/2, 0);
+        glScalef(SIZE_OF_CASE, SIZE_OF_CASE, 1);
+        draw_quad_with_texture(enemy_sprite);
+    glPopMatrix();  
 }
 
+/**
+ * Dessine tous les ennemis
+ */
 void draw_enemies(const std::vector<enemy> enemies, std::vector<GLuint> & enemy_sprites) {
     for (auto & enemy : enemies) {
         draw_enemy(enemy, enemy_sprites[(int)enemy.type]);
