@@ -47,7 +47,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     }
     
     // Création de la liste des ennemis
-    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::BOMBER));
+    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::ARCHER));
     
 
     // Tower sprites
@@ -82,13 +82,13 @@ void App::update()
     _previousTime = currentTime;
 
     // Actions des ennemis
+    std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
     for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
         // L'ennemi attaque s'il est sur le dernier noeud
         if (it->attacking) {
             _life -= it->damage;
             if (it->type == ENEMY_TYPE::BOMBER) {
-                _enemy_list.erase(it);
-                it->kill();
+                to_kill.push_back(it);
             }
         }
         // Sinon il se déplace
@@ -97,6 +97,12 @@ void App::update()
             it->update_direction(_path);
         }
     }
+
+    // Tue les ennemis à tuer
+    for (auto && enemy_it : to_kill) {
+        _enemy_list.erase(enemy_it);
+    }
+    
 
     render();
 }

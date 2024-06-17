@@ -7,16 +7,16 @@ void enemy::kill() {
 void enemy::update_position() {
     switch (this->facing) {
     case DIRECTION::DOWN :
-        this->pos_y += 0.05f;
+        this->pos_y += 0.01f;
         break;
     case DIRECTION::UP :
-        this->pos_y -= 0.05f;
+        this->pos_y -= 0.01f;
         break;
     case DIRECTION::LEFT :
-        this->pos_x -= 0.05f;
+        this->pos_x -= 0.01f;
         break;
     case DIRECTION::RIGHT :
-        this->pos_x += 0.05f;
+        this->pos_x += 0.01f;
         break;
     default:
         break;
@@ -25,21 +25,23 @@ void enemy::update_position() {
 
 void enemy::update_direction(std::vector<std::pair<float, float>> path) {
     bool update {false};
+    int range = this->current_node+1 != path.size() ? 0 : this->range; // Si le prochain noeud est le dernier, il faut prendre la range en compte
+    
     switch (this->facing) {
-    case DIRECTION::LEFT :
-        update = path[this->current_node].first >= path[this->current_node+1].first;
-        break;
-    case DIRECTION::DOWN :
-        update = path[this->current_node].second >= path[this->current_node+1].second;
-        break;
-    case DIRECTION::RIGHT :
-        update = path[this->current_node].first <= path[this->current_node+1].first;
-        break;
-    case DIRECTION::UP :
-        update = path[this->current_node].second <= path[this->current_node+1].second;
-        break;
-    default:
-        break;
+        case DIRECTION::LEFT :
+            update = pos_x <= path[this->current_node+1].first + range;
+            break;
+        case DIRECTION::DOWN :
+            update = pos_y >= path[this->current_node+1].second + range;
+            break;
+        case DIRECTION::RIGHT :
+            update = pos_x >= path[this->current_node+1].first + range;
+            break;
+        case DIRECTION::UP :
+            update = pos_y <= path[this->current_node+1].second + range;
+            break;
+        default:
+            break;
     }
     if (update) {
         this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
