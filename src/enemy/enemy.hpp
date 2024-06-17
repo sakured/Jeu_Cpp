@@ -29,7 +29,7 @@ struct enemy {
 
     unsigned int gain {};
     unsigned int damage {};
-    unsigned int range {};
+    float range {};
     unsigned int pace {};
     float speed {};
     std::string speed_label {};

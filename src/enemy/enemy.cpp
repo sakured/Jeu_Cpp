@@ -13,16 +13,16 @@ void enemy::kill() {
 void enemy::update_position() {
     switch (this->facing) {
     case DIRECTION::DOWN :
-        this->pos_y += 0.01f;
+        this->pos_y += this->speed;
         break;
     case DIRECTION::UP :
-        this->pos_y -= 0.01f;
+        this->pos_y -= this->speed;
         break;
     case DIRECTION::LEFT :
-        this->pos_x -= 0.01f;
+        this->pos_x -= this->speed;
         break;
     case DIRECTION::RIGHT :
-        this->pos_x += 0.01f;
+        this->pos_x += this->speed;
         break;
     default:
         break;
@@ -34,7 +34,7 @@ void enemy::update_position() {
  */
 void enemy::update_direction(std::vector<std::pair<float, float>> path) {
     bool update {false};
-    int range = this->current_node+1 != path.size() ? 0 : this->range; // Si le prochain noeud est le dernier, il faut prendre la range en compte
+    float range = this->current_node+1 != path.size()-1 ? 0 : this->range; // Si le prochain noeud est le dernier, il faut prendre la range en compte
     
     switch (this->facing) {
         case DIRECTION::LEFT :
@@ -67,15 +67,15 @@ enemy create_enemy(float pos_x, float pos_y, ENEMY_TYPE type) {
 
     switch (type) {
         case ENEMY_TYPE::ARCHER:
-            enemy = {type, pos_x, pos_y, 10, 2, 4, 5, 0.01, "average", 50};
+            enemy = {type, pos_x, pos_y, 10, 2, 0.5f, 5, 0.015625f, "average", 50};
             break;
         
         case ENEMY_TYPE::KNIGHT:
-            enemy = {type, pos_x, pos_y, 12, 4, 1, 3, 0.005, "slow", 100};
+            enemy = {type, pos_x, pos_y, 12, 4, 0, 3, 0.0078125f, "slow", 100};
             break;
 
         case ENEMY_TYPE::BOMBER:
-            enemy = {type, pos_x, pos_y, 8, 10, 1, 3, 0.02, "fast", 20};
+            enemy = {type, pos_x, pos_y, 8, 10, 0, 3, 0.03125f, "fast", 20};
             break;
 
         default:
