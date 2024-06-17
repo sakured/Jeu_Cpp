@@ -82,21 +82,21 @@ void App::update()
     _previousTime = currentTime;
 
     // Actions des ennemis
-    for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
-        // L'ennemi attaque s'il est sur le dernier noeud
-        if ((*it).attacking) {
-            _life -= (*it).damage;
-            if ((*it).type == ENEMY_TYPE::BOMBER) {
-                _enemy_list.erase(it);
-                (*it).kill();
-            }
-        }
-        // Sinon il se déplace
-        else {
-            (*it).update_position();         
-            (*it).update_direction(_path);
-        }
-    }
+    // for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+    //     // L'ennemi attaque s'il est sur le dernier noeud
+    //     if ((*it).attacking) {
+    //         _life -= (*it).damage;
+    //         if ((*it).type == ENEMY_TYPE::BOMBER) {
+    //             _enemy_list.erase(it);
+    //             (*it).kill();
+    //         }
+    //     }
+    //     // Sinon il se déplace
+    //     else {
+    //         (*it).update_position();         
+    //         (*it).update_direction(_path);
+    //     }
+    // }
 
     render();
 }
@@ -150,8 +150,8 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
         
         // Création d'une tour à la case cliquée
         if (_new_tower_type != TOWER_TYPE::NONE 
-        && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied
-        && x >= 0 && case_coordinate.first < WIDTH_OF_MAP && y >= 0 && case_coordinate.second < WIDTH_OF_MAP) {
+        && x >= 0 && case_coordinate.first < WIDTH_OF_MAP && y >= 0 && case_coordinate.second < WIDTH_OF_MAP
+        && !get_case_from_coordinates(case_coordinate.first, case_coordinate.second, _tile_list).is_occupied) {
             tower tower { create_tower(case_coordinate.first, case_coordinate.second, _new_tower_type) };
             _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].is_occupied = true;
             _tile_list[get_id_from_position(case_coordinate.first, case_coordinate.second)].type = CASE_TYPE::TOWER;
