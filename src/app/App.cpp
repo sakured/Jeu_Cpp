@@ -54,7 +54,6 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // Création de la liste des ennemis
     _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::ARCHER));
     
-
     // Tower sprites
     for (auto & tower_type : ALL_TOWER_TYPES) {
         img::Image tower {img::load(make_absolute_path(get_sprite_from_type(tower_type).c_str(), true), 4, true)};
@@ -130,9 +129,8 @@ void App::update()
         _enemy_list.erase(enemy_it);
     }
     
-
-        // Mise à jour de la map
-        render();
+    // Mise à jour de la map
+    render();
     }
 }
 
@@ -155,8 +153,6 @@ void App::render()
 
 void App::key_callback(int key, int scancode, int action, int mods)
 {
-    
-
     // Choix du type de la tour à créer selon la touche cliquée
     if (_is_playing) {
         for (int i=0; i<NUMBER_OF_TOWER_TYPE; i++) {
@@ -210,7 +206,8 @@ void App::cursor_position_callback(double /*xpos */, double /*ypos */)
 {
 }
 
-void App::size_callback(int width, int height) {
+void App::size_callback(int width, int height) 
+{
     _width = width;
     _height = height;
 
