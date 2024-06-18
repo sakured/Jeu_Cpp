@@ -40,6 +40,7 @@ private:
 
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};
+    std::vector<GLuint> _tiles_sprites {};
 
     std::vector<enemy> _enemy_list {};
     std::vector<tower> _tower_list {};

@@ -54,17 +54,23 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // Création de la liste des ennemis
     create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
     
-    // Tower sprites
+    // Sprites des tours
     for (auto & tower_type : ALL_TOWER_TYPES) {
         img::Image tower {img::load(make_absolute_path(get_sprite_from_type(tower_type).c_str(), true), 4, true)};
         _tower_sprites.push_back(loadTexture(tower));
     }
 
-    // Enemy sprites
+    // Sprites des ennemis
     for (auto & enemy_type : ALL_ENEMY_TYPES) {
         img::Image enemy {img::load(make_absolute_path(get_sprite_from_type(enemy_type).c_str(), true), 4, true)};
         _enemy_sprites.push_back(loadTexture(enemy));
     }
+
+    // Sprites des cases
+    _tiles_sprites.push_back(loadTexture(img::load(make_absolute_path("images/start.png", true), 4, false)));
+    _tiles_sprites.push_back(loadTexture(img::load(make_absolute_path("images/end.png", true), 4, false)));
+    _tiles_sprites.push_back(loadTexture(img::load(make_absolute_path("images/road.png", true), 4, false)));
+    _tiles_sprites.push_back(loadTexture(img::load(make_absolute_path("images/blank.png", true), 4, false)));
 }
 
 void App::setup()
@@ -156,7 +162,7 @@ void App::render()
     glLoadIdentity();
 
     // Dessin de la map et des infos
-    draw_map(_tile_list);
+    draw_map(_tile_list, _tiles_sprites);
     draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _next_salve, _tower_sprites, _enemy_sprites); 
     draw_start_button(_is_playing, _width, _height);
     draw_enemies(_enemy_list, _enemy_sprites);

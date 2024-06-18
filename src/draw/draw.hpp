@@ -20,9 +20,9 @@ void draw_enemy(float pos_x, float pos_y, const GLuint & enemy_sprite);
 
 void draw_enemies(const std::vector<enemy> enemies, std::vector<GLuint> & enemy_sprites);
 
-void draw_case(const Case & my_case);
+void draw_case(const Case & my_case, const std::vector<GLuint> & sprites);
 
-void draw_map(const std::vector<Case> & case_list);
+void draw_map(const std::vector<Case> & case_list, const std::vector<GLuint> & sprites);
 
 void update_case_texture (int x_pos, int y_pos);
 

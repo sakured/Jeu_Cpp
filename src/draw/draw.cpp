@@ -7,19 +7,24 @@
 /**
  * Dessine une case
  */
-void draw_case(const Case & my_case) {
-    // Choix de la bonne couleur de la case
+void draw_case(const Case & my_case, const std::vector<GLuint> & sprites) {
+    GLuint case_sprite {};
+    // Choix de la bonne texture de la case
     switch (my_case.type) {
         case CASE_TYPE::START :
+            case_sprite = sprites[0];
             glColor3f(IN[0], IN[1], IN[2]);
             break;
         case CASE_TYPE::END :
+            case_sprite = sprites[1];
             glColor3f(OUT[0], OUT[1], OUT[2]);
             break;
         case CASE_TYPE::ROAD :
+            case_sprite = sprites[2];
             glColor3f(PATH[0], PATH[1], PATH[2]);
             break;
         default :
+            case_sprite = sprites[3];
             glColor3f(0.0f, 0.0f, 0.0f);
             break;
     }
@@ -28,12 +33,9 @@ void draw_case(const Case & my_case) {
      glPushMatrix();
         glScalef(.8, -.8, 1);
         glTranslatef(-1, -1, 0);
-        glBegin(GL_QUADS);
-            glVertex2f(my_case.pos_x, my_case.pos_y);
-            glVertex2f(my_case.pos_x, my_case.pos_y + SIZE_OF_CASE);
-            glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y + SIZE_OF_CASE);
-            glVertex2f(my_case.pos_x + SIZE_OF_CASE, my_case.pos_y);
-        glEnd();
+        glTranslatef(my_case.pos_x + SIZE_OF_CASE/2.f, my_case.pos_y + SIZE_OF_CASE/2.f, 0);
+        glScalef(SIZE_OF_CASE, SIZE_OF_CASE, 1);
+        draw_quad_with_texture(case_sprite);
     glPopMatrix();
 
     // Dessin de la tour s'il y en a une
@@ -43,9 +45,9 @@ void draw_case(const Case & my_case) {
 /**
  * Dessine une map
  */
-void draw_map(const std::vector<Case> & case_list) {
+void draw_map(const std::vector<Case> & case_list, const std::vector<GLuint> & sprites) {
     for (auto & my_case : case_list) {
-        draw_case(my_case);
+        draw_case(my_case, sprites);
     }
 }
 
