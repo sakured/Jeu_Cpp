@@ -147,7 +147,7 @@ void draw_starting(SimpleText & TextRenderer, float width, float height) {
     TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the assiciated tile to build the chosen boat.", width/2, height/2+160, SimpleText::CENTER);
     TextRenderer.Label("(Ex : tile 1 for boat of type 1)", width/2, height/2+180, SimpleText::CENTER);
     TextRenderer.Label("You have to survive 6 salvos of attacks to win.", width/2, height/2+200, SimpleText::CENTER);
-    TextRenderer.Label("You can pause the game at any time.", width/2, height/2+220, SimpleText::CENTER);
+    TextRenderer.Label("You can pause the game at any time if you click on P.", width/2, height/2+220, SimpleText::CENTER);
     TextRenderer.Label("Click on space to start.", width/2, height/2+240, SimpleText::CENTER);
 }
 
