@@ -24,9 +24,7 @@ void draw_case(const Case & my_case, const std::vector<GLuint> & sprites);
 
 void draw_map(const std::vector<Case> & case_list, const std::vector<GLuint> & sprites);
 
-void update_case_texture (int x_pos, int y_pos);
-
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, float next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites);
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, double next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites);
 
 void draw_start_button(bool is_playing, float width, float height);
 

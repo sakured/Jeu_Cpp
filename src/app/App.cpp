@@ -20,7 +20,7 @@
 // Liste des touches à cliquer pour créer des tours de différents types
 std::vector<int> key_list {GLFW_KEY_KP_1, GLFW_KEY_KP_2, GLFW_KEY_KP_3, GLFW_KEY_KP_4, GLFW_KEY_KP_5};
 
-App::App() : _previousTime(0.0), _viewSize(2.0)
+App::App() : _viewSize(2.0)
 {
     // Lecture du fichier ITD
     auto itd = read_ITD(MAP_FILE_NAME, IN, OUT, PATH);
@@ -91,24 +91,21 @@ void App::setup()
 
 void App::update()
 {
-    _n_tic++;
-
     // Check si le joueur a perdu
     if (_life <= 0) {
         _is_playing = false;
         draw_game_over();
     
     // Check si le joueur a gagné
-    } else if (_number_of_enemy_of_type == 7 && _enemy_list.empty()) {
+    } else if (_number_of_enemy_of_type == _salve_number && _enemy_list.empty()) {
         _is_playing = false;
         draw_victory();
     
     // Sinon
     } else if (_is_playing) {
-        const double currentTime{glfwGetTime()};
-        const double elapsedTime{currentTime - _previousTime};
-        _previousTime = currentTime;
-        
+
+        _n_tic++;
+
         // Actions des ennemis
         for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
             // L'ennemi attaque s'il est sur le dernier noeud
@@ -146,11 +143,17 @@ void App::update()
 
         _enemy_list.erase(new_end, _enemy_list.end());
 
+
         // Création des salves d'ennemis (chaque fois plus puissantes)
-        _next_salve = 6.f - fmod(currentTime, 6.f);
-        if (_next_salve <= 0.02f && _number_of_enemy_of_type < 7) {
+
+        const double current_time{glfwGetTime()};
+
+        _salve_timer = _salve_pace - fmod(current_time, _salve_pace);
+
+        if (current_time >= _next_salve && _number_of_enemy_of_type < _salve_number) {
             _number_of_enemy_of_type ++;
             create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
+            _next_salve += _salve_pace;
         }
     
         // Mise à jour de la map
@@ -167,7 +170,7 @@ void App::render()
 
     // Dessin de la map et des infos
     draw_map(_tile_list, _tiles_sprites);
-    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _next_salve, _tower_sprites, _enemy_sprites); 
+    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _salve_timer, _tower_sprites, _enemy_sprites); 
     // draw_start_button(_is_playing, _width, _height);
     draw_enemies(_enemy_list, _enemy_sprites);
     

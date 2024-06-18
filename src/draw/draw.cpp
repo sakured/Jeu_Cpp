@@ -144,7 +144,7 @@ void draw_starting(SimpleText & TextRenderer, float width, float height) {
     TextRenderer.Label("Welcome in the One Piece Tower Defense !", width/2, height/2+100, SimpleText::CENTER);
     TextRenderer.Label("The goal is very simple. You are the pirates, and you have to prevent the marine from attacking the devil fruit.", width/2, height/2+120, SimpleText::CENTER);
     TextRenderer.Label("To attack the different types of marine admirals, build boats of pirates. You can buy them with money.", width/2, height/2+140, SimpleText::CENTER);
-    TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the assiciated tile to build the chosen boat.", width/2, height/2+160, SimpleText::CENTER);
+    TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the associated tile to build the chosen boat.", width/2, height/2+160, SimpleText::CENTER);
     TextRenderer.Label("(Ex : tile 1 for boat of type 1)", width/2, height/2+180, SimpleText::CENTER);
     TextRenderer.Label("You have to survive 6 salvos of attacks to win.", width/2, height/2+200, SimpleText::CENTER);
     TextRenderer.Label("You can pause and restart the game at any time if you click on P.", width/2, height/2+220, SimpleText::CENTER);
@@ -154,7 +154,7 @@ void draw_starting(SimpleText & TextRenderer, float width, float height) {
 /**
  * Dessine les informations du level et des ressources du joueur
  */
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, float next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, double next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
     
     // Marges
     int tower_margin = (int)(height * 0.33);
@@ -212,7 +212,7 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
     // Informations sur les tours
     for (int i=0; i<tower_examples.size(); i++) {
         stream.str("");
-        stream << std::fixed << "BOAT TYPE " << tower_type_to_string(tower_examples[i].type);
+        stream << std::fixed << "BOAT TYPE " << i+1 << " " << tower_type_to_string(tower_examples[i].type);
         TextRenderer.Label(stream.str().c_str(), 100, tower_margin + i * 120, SimpleText::LEFT);
         stream.str("");
         stream << std::fixed << "Cost : " << tower_examples[i].cost;

@@ -27,16 +27,17 @@ private:
 
     int _width {};
     int _height {};
-    double _previousTime {};
     float _viewSize {};
     unsigned int _n_tic {};
-    float _next_salve {10.f};
+    double _salve_pace {10};
+    double _salve_timer {_salve_pace};
+    double _next_salve {_salve_pace};
+    int _salve_number {10};
 
     std::pair<float, float> _in_pos;
     std::pair<float, float> _out_pos;
 
     // Add your variables here
-    GLuint _texture {};
 
     std::vector<GLuint> _tower_sprites {};
     std::vector<GLuint> _enemy_sprites {};

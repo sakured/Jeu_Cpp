@@ -70,15 +70,15 @@ enemy create_enemy(float pos_x, float pos_y, ENEMY_TYPE type) {
 
     switch (type) {
         case ENEMY_TYPE::ARCHER:
-            enemy = {type, pos_x, pos_y, 10, 2, 0.5f, 5, 0.015625f, "average", 50};
+            enemy = {type, pos_x, pos_y, 10, 2, 0.5f, 10, 0.015625f, "average", 60};
             break;
         
         case ENEMY_TYPE::KNIGHT:
-            enemy = {type, pos_x, pos_y, 12, 4, 0, 3, 0.0078125f, "slow", 100};
+            enemy = {type, pos_x, pos_y, 12, 4, 0, 12, 0.0078125f, "slow", 80};
             break;
 
         case ENEMY_TYPE::BOMBER:
-            enemy = {type, pos_x, pos_y, 8, 10, 0, 3, 0.03125f, "fast", 20};
+            enemy = {type, pos_x, pos_y, 8, 10, 0, 1, 0.03125f, "fast", 40};
             break;
 
         default:
