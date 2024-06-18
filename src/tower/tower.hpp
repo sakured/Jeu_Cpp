@@ -11,7 +11,7 @@ static const int NUMBER_OF_TOWER_TYPE = 2;
 
 static const TOWER_TYPE ALL_TOWER_TYPES[NUMBER_OF_TOWER_TYPE] = {TOWER_TYPE::BOW, TOWER_TYPE::CROSSBOW};
 
-static const std::string ALL_TOWER_SPRITES[NUMBER_OF_TOWER_TYPE] = {"images/Towers/turret_01_mk1.gif", "images/Towers/turret_02_mk1.gif"};
+static const std::string ALL_TOWER_SPRITES[NUMBER_OF_TOWER_TYPE] = {"images/Towers/pirate1.png", "images/Towers/pirate2.png"};
 
 struct tower {
     TOWER_TYPE type;

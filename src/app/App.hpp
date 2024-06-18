@@ -57,6 +57,7 @@ private:
 
     int _life {150};
 
+    bool _is_game_started {false};
     bool _is_playing {false};
 
     TOWER_TYPE _new_tower_type {TOWER_TYPE::NONE};

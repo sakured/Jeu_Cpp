@@ -33,3 +33,5 @@ void draw_start_button(bool is_playing, float width, float height);
 void draw_game_over();
 
 void draw_victory();
+
+void draw_starting(SimpleText & TextRenderer, float width, float height);

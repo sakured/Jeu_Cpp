@@ -103,15 +103,15 @@ std::string enemy_type_to_string(ENEMY_TYPE type) {
 
     switch (type) {
         case ENEMY_TYPE::ARCHER:
-            string_type = "ARCHER";
+            string_type = "MARINE GENERAL";
             break;
             
         case ENEMY_TYPE::KNIGHT:
-            string_type = "KNIGHT";
+            string_type = "MARINE ADMIRAL";
             break;
 
         case ENEMY_TYPE::BOMBER:
-            string_type = "BOMBER";
+            string_type = "BOMB";
             break;
 
         default:
