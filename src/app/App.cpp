@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <sstream>
-#include <random>
 
 #include "simpletext.h"
 #include "utils.hpp"
@@ -53,18 +52,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     }
     
     // Création de la liste des ennemis
-    int nb_enemy {1};
-    for (int i=0; i<nb_enemy; i++) {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dis_y(-0.2, 0.2);
-        double delay_y = dis_y(gen);
-        std::uniform_real_distribution<> dis_x(-0.01, 0.01);
-        double delay_x = dis_x(gen);
-        for (ENEMY_TYPE enemy_type : ALL_ENEMY_TYPES) {
-            _enemy_list.push_back(create_enemy(_in_pos.first + delay_x, _in_pos.second + delay_y, enemy_type));
-        }
-    }
+    create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
     
     // Tower sprites
     for (auto & tower_type : ALL_TOWER_TYPES) {
@@ -99,6 +87,11 @@ void App::update()
     if (_life <= 0) {
         _is_playing = false;
         draw_game_over();
+    
+    // Check si le joueur a gagné
+    } else if (_number_of_enemy_of_type == 6) {
+        _is_playing = false;
+        draw_victory();
     
     // Sinon
     } else {
@@ -142,6 +135,13 @@ void App::update()
         });
 
         _enemy_list.erase(new_end, _enemy_list.end());
+
+        // Création des salves d'ennemis (chaque fois plus puissantes)
+        _next_salve = 6.f - fmod(currentTime, 6.f);
+        if (_next_salve <= 0.02f) {
+            _number_of_enemy_of_type ++;
+            create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
+        }
     
         // Mise à jour de la map
         render();
@@ -157,7 +157,7 @@ void App::render()
 
     // Dessin de la map et des infos
     draw_map(_tile_list);
-    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _tower_sprites, _enemy_sprites); 
+    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _next_salve, _tower_sprites, _enemy_sprites); 
     draw_start_button(_is_playing, _width, _height);
     draw_enemies(_enemy_list, _enemy_sprites);
     

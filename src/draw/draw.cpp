@@ -113,9 +113,22 @@ void draw_game_over() {
 }
 
 /**
+ * Dessine l'écran de victoire
+ */
+void draw_victory() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    img::Image game_over {img::load(make_absolute_path("images/welldone.png", true), 4, true)};
+    glPushMatrix();
+        glScalef(3., .5, 1);
+        draw_quad_with_texture(loadTexture(game_over));  
+    glPopMatrix();
+}
+
+/**
  * Dessine les informations du level et des ressources du joueur
  */
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, float next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {
     
     // Marges
     int tower_margin = (int)(height * 0.33);
@@ -131,8 +144,13 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
         draw_quad_with_texture(title);
     glPopMatrix();
 
-    // Informations sur l'argent
+    // Temps avant la prochaine salve d'attaque
     std::stringstream stream {};
+    stream << std::fixed << "Time before next salve of enemies : " << std::setprecision(2) << next_salve;
+    TextRenderer.Label(stream.str().c_str(), width/2, height-30, SimpleText::CENTER);
+
+    // Informations sur l'argent
+    stream.str("");
     stream << money;
     TextRenderer.Label(stream.str().c_str(), 100, (.28*height)/2., SimpleText::LEFT);
     GLuint piece { loadTexture(img::load(make_absolute_path("images/money.png", true), 4, true)) };

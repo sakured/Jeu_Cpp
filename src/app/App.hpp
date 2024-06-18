@@ -30,6 +30,7 @@ private:
     double _previousTime {};
     float _viewSize {};
     unsigned int _n_tic {};
+    float _next_salve {10.f};
 
     std::pair<float, float> _in_pos;
     std::pair<float, float> _out_pos;
@@ -42,6 +43,8 @@ private:
 
     std::vector<enemy> _enemy_list {};
     std::vector<tower> _tower_list {};
+
+    int _number_of_enemy_of_type {1};
 
     std::vector<std::pair<float, float>> _path;
 

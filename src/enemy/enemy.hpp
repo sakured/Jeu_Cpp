@@ -35,7 +35,7 @@ struct enemy {
     std::string speed_label {};
     int pv {};
 
-    bool is_attacking {false};
+    bool is_is_attacking {false};
 
     DIRECTION facing {DIRECTION::DOWN};
     int current_node {0};
@@ -68,3 +68,6 @@ void merge_sort_merge(std::vector<enemy> & vec, size_t const left, size_t const 
 void merge_sort(std::vector<enemy> & vec, size_t const left, size_t const right);
 
 void merge_sort(std::vector<enemy> & vec);
+
+
+void create_salve_enemy(std::vector<enemy> & enemy_liste, std::pair<float,float> & in_pos , int number_of_enemy);

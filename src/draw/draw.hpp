@@ -26,8 +26,10 @@ void draw_map(const std::vector<Case> & case_list);
 
 void update_case_texture (int x_pos, int y_pos);
 
-void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites);
+void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, float next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites);
 
 void draw_start_button(bool is_playing, float width, float height);
 
 void draw_game_over();
+
+void draw_victory();

@@ -1,4 +1,5 @@
 #include "enemy.hpp"
+#include <random>
 
 /**
  * Tue l'ennemi
@@ -128,4 +129,21 @@ DIRECTION calculate_direction(std::pair<float, float> current_node_coord, std::p
     else if ((current_node_coord.first - next_node_coord.first) > 0) return DIRECTION::LEFT;
     else if ((current_node_coord.second - next_node_coord.second) > 0) return DIRECTION::UP;
     else return DIRECTION::DOWN;
+}
+
+/**
+ * Créé des salves d'ennemis
+ */
+void create_salve_enemy(std::vector<enemy> & enemy_list, std::pair<float,float> & in_pos, int number_of_enemy) {
+    for (int i=0; i<number_of_enemy; i++) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dis_y(-0.2, 0.2);
+        double delay_y = dis_y(gen);
+        std::uniform_real_distribution<> dis_x(-0.01, 0.01);
+        double delay_x = dis_x(gen);
+        for (ENEMY_TYPE enemy_type : ALL_ENEMY_TYPES) {
+            enemy_list.push_back(create_enemy(in_pos.first + delay_x, in_pos.second + delay_y, enemy_type));
+        }
+    }
 }
