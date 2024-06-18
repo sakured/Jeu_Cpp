@@ -133,6 +133,25 @@ void draw_victory() {
 }
 
 /**
+ * Dessine l'écran d'accueil du jeu
+ */
+void draw_starting(SimpleText & TextRenderer, float width, float height) {
+    glPushMatrix();
+        glTranslatef(0, 0.3, 0);
+        glScalef(.7f, .7f, 1);
+        draw_quad_with_texture(loadTexture(img::load(make_absolute_path("images/logo.png", true), 4, true)));  
+    glPopMatrix();
+    TextRenderer.Label("Welcome in the One Piece Tower Defense !", width/2, height/2+100, SimpleText::CENTER);
+    TextRenderer.Label("The goal is very simple. You are the pirates, and you have to prevent the marine from attacking the devil fruit.", width/2, height/2+120, SimpleText::CENTER);
+    TextRenderer.Label("To attack the different types of marine admirals, build towers. You can buy them with money.", width/2, height/2+140, SimpleText::CENTER);
+    TextRenderer.Label("You have the possibility to build different sorts of towers. Click on the assiciated tile to build the chosen tower.", width/2, height/2+160, SimpleText::CENTER);
+    TextRenderer.Label("(Ex : tile 1 for tower of type 1)", width/2, height/2+180, SimpleText::CENTER);
+    TextRenderer.Label("You have to survive 6 salvos of attacks to win.", width/2, height/2+200, SimpleText::CENTER);
+    TextRenderer.Label("You can pause the game at any time.", width/2, height/2+220, SimpleText::CENTER);
+    TextRenderer.Label("Click on space to start.", width/2, height/2+240, SimpleText::CENTER);
+}
+
+/**
  * Dessine les informations du level et des ressources du joueur
  */
 void draw_level_informations (int level, SimpleText & TextRenderer, float width, float height, int money, int life, float next_salve, std::vector<GLuint> & tower_sprites, std::vector<GLuint> & enemy_sprites) {

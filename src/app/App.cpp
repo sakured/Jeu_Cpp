@@ -75,14 +75,18 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 
 void App::setup()
 {
-    // Set the clear color to a nice blue
-    glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
+    // Set the clear color to a nice black
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // Setup the text renderer with blending enabled and white text color
     _TextRenderer.ResetFont();
     _TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
     _TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     _TextRenderer.EnableBlending(true);
+
+    // Affiche l'écran d'accueil
+    draw_starting(_TextRenderer, _width, _height);
+    _TextRenderer.Render();
 }
 
 void App::update()
@@ -164,7 +168,7 @@ void App::render()
     // Dessin de la map et des infos
     draw_map(_tile_list, _tiles_sprites);
     draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _next_salve, _tower_sprites, _enemy_sprites); 
-    draw_start_button(_is_playing, _width, _height);
+    // draw_start_button(_is_playing, _width, _height);
     draw_enemies(_enemy_list, _enemy_sprites);
     
     // Mise à jour du texte
@@ -173,6 +177,23 @@ void App::render()
 
 void App::key_callback(int key, int scancode, int action, int mods)
 {
+    // Démarrage du jeu
+    if (!_is_game_started) {
+        if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+            _is_game_started = true;
+            _is_playing= true;
+        }
+    }
+
+    // Met en pause et redémarre le jeu
+    if (_is_game_started) {
+        if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+            // draw_start_button(_is_playing, _width, _height);
+            if (_is_playing) _is_playing = false;
+            else _is_playing = true;
+        }
+    }
+
     // Choix du type de la tour à créer selon la touche cliquée
     if (_is_playing) {
         for (int i=0; i<NUMBER_OF_TOWER_TYPE; i++) {
@@ -189,11 +210,6 @@ void App::mouse_button_callback(GLFWwindow* window, int button, int action, int 
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
 		double x, y;
         glfwGetCursorPos(window, &x, &y);
-
-        // Met à jour le bouton start / pause
-        draw_start_button(_is_playing, _width, _height);
-        if (_is_playing) _is_playing = false;
-        else _is_playing = true;
 
         // Récupération des coordonées de la case cliquée
         float vertical_margin = 0.2 * _height / 2;
@@ -246,5 +262,11 @@ void App::size_callback(int width, int height)
     else
     {
         glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+    }
+
+    // Affiche l'écran d'accueil même quand on change la taille de la fenêtre
+    if (!_is_game_started) {
+        draw_starting(_TextRenderer, _width, _height);
+        _TextRenderer.Render();
     }
 }
