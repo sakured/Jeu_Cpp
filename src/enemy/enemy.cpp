@@ -57,7 +57,7 @@ void enemy::update_direction(std::vector<std::pair<float, float>> path) {
     if (update) {
         this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
         this->current_node++;
-        this->attacking = (this->current_node == path.size()-1);
+        this->is_attacking = (this->current_node == path.size()-1);
     }
 }
 
