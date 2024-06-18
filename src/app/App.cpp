@@ -89,12 +89,12 @@ void App::update()
         draw_game_over();
     
     // Check si le joueur a gagné
-    } else if (_number_of_enemy_of_type == 6) {
+    } else if (_number_of_enemy_of_type == 7 && _enemy_list.empty()) {
         _is_playing = false;
         draw_victory();
     
     // Sinon
-    } else {
+    } else if (_is_playing) {
         const double currentTime{glfwGetTime()};
         const double elapsedTime{currentTime - _previousTime};
         _previousTime = currentTime;
@@ -138,7 +138,7 @@ void App::update()
 
         // Création des salves d'ennemis (chaque fois plus puissantes)
         _next_salve = 6.f - fmod(currentTime, 6.f);
-        if (_next_salve <= 0.02f) {
+        if (_next_salve <= 0.02f && _number_of_enemy_of_type < 7) {
             _number_of_enemy_of_type ++;
             create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
         }

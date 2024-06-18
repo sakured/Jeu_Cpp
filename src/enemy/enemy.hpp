@@ -35,7 +35,7 @@ struct enemy {
     std::string speed_label {};
     int pv {};
 
-    bool is_is_attacking {false};
+    bool is_attacking {false};
 
     DIRECTION facing {DIRECTION::DOWN};
     int current_node {0};

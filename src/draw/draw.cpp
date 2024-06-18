@@ -83,10 +83,15 @@ void draw_tower(const Case & my_case, const GLuint & tower_sprite) {
  */
 void draw_enemy(enemy enemy, const GLuint & enemy_sprite) {
     glPushMatrix();
+        // Ennemi
         glScalef(0.8, 0.8, 1);
         glTranslatef(-1+enemy.pos_x+SIZE_OF_CASE/2, 1-enemy.pos_y-SIZE_OF_CASE/2, 0);
         glScalef(SIZE_OF_CASE, SIZE_OF_CASE, 1);
         draw_quad_with_texture(enemy_sprite);
+        // Barre de vies
+        glTranslatef(0., 0.9f, 0.);
+        glScalef(enemy.pv/90.f, 0.1f, 1);
+        draw_quad();
     glPopMatrix();  
 }
 
