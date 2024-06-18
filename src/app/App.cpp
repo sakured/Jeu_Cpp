@@ -53,14 +53,17 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     }
     
     // Création de la liste des ennemis
-    for (ENEMY_TYPE enemy_type : ALL_ENEMY_TYPES) {
+    int nb_enemy {3};
+    for (int i=0; i<nb_enemy; i++) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis_y(-0.2, 0.2);
         double delay_y = dis_y(gen);
         std::uniform_real_distribution<> dis_x(-0.01, 0.01);
         double delay_x = dis_x(gen);
-        _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, enemy_type));
+        for (ENEMY_TYPE enemy_type : ALL_ENEMY_TYPES) {
+            _enemy_list.push_back(create_enemy(_in_pos.first + delay_x, _in_pos.second + delay_y, enemy_type));
+        }
     }
     
     // Tower sprites
@@ -137,6 +140,7 @@ void App::update()
         
         for (auto & enemy_it : to_kill) {
             _enemy_list.erase(enemy_it);
+
         }
     
     // Mise à jour de la map
