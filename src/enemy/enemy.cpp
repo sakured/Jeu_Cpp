@@ -11,6 +11,7 @@ void enemy::kill() {
  * Met à jour la direction de l'ennemi
  */
 void enemy::update_position() {
+    this->crossed_distance += this->speed;
     switch (this->facing) {
     case DIRECTION::DOWN :
         this->pos_y += this->speed;

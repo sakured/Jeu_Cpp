@@ -50,6 +50,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     
     // Création de la liste des ennemis
     _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::ARCHER));
+    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::BOMBER));
+    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::KNIGHT));
     
 
     // Tower sprites
@@ -79,6 +81,8 @@ void App::setup()
 
 void App::update()
 {
+    _n_tic++;
+
     // Check si le joueur a perdu
     if (_life <= 0) {
         _is_playing = false;
@@ -90,42 +94,41 @@ void App::update()
         const double elapsedTime{currentTime - _previousTime};
         _previousTime = currentTime;
 
-    _n_tic++;
-
-    std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
-    
-    // Actions des ennemis
-    for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
-        // L'ennemi attaque s'il est sur le dernier noeud
-        if (it->attacking) {
-            if (_n_tic % it->pace == 0) {
-                if (it->type == ENEMY_TYPE::BOMBER) to_kill.push_back(it);
-                _life -= it->damage;
+        std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
+        
+        // Actions des ennemis
+        for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+            // L'ennemi attaque s'il est sur le dernier noeud
+            if (it->attacking) {
+                if (_n_tic % it->pace == 0) {
+                    if (it->type == ENEMY_TYPE::BOMBER) to_kill.push_back(it);
+                    _life -= it->damage;
+                }
+            }
+            // Sinon il se déplace
+            else {
+                it->update_position();         
+                it->update_direction(_path);
             }
         }
-        // Sinon il se déplace
-        else {
-            it->update_position();         
-            it->update_direction(_path);
-        }
-    }
 
-    // Tri des ennemis dans l'ordre
+        // Tri des ennemis par ordre de leur distance entre le début et la fin du niveau
+        // quick_sort(_enemy_list);
 
-    // Action des tours
-    for (auto & tower : _tower_list) {
-        for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
-            if ((_n_tic % it->pace == 0) && tower.in_range(get_case_coordonates_from_gl_coordonates(it->pos_x, it->pos_y))) {
-                it->pv -= tower.damage;
-                _money += it->gain;
-                if (it->pv <= 0) to_kill.push_back(it);
-            }   
+        // Action des tours
+        for (auto & tower : _tower_list) {
+            for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
+                if ((_n_tic % it->pace == 0) && tower.in_range(get_case_coordonates_from_gl_coordonates(it->pos_x, it->pos_y))) {
+                    it->pv -= tower.damage;
+                    _money += it->gain;
+                    if (it->pv <= 0) to_kill.push_back(it);
+                }   
+            }
         }
-    }
-    
-    for (auto & enemy_it : to_kill) {
-        _enemy_list.erase(enemy_it);
-    }
+        
+        for (auto & enemy_it : to_kill) {
+            _enemy_list.erase(enemy_it);
+        }
     
 
         // Mise à jour de la map
