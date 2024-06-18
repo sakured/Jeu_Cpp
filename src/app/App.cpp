@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <random>
 
 #include "simpletext.h"
 #include "utils.hpp"
@@ -52,7 +53,13 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     }
     
     // Création de la liste des ennemis
-    _enemy_list.push_back(create_enemy(_in_pos.first, _in_pos.second, ENEMY_TYPE::ARCHER));
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis_y(-0.2, 0.2);
+    double delay_y = dis_y(gen);
+    std::uniform_real_distribution<> dis_x(-0.01, 0.01);
+    double delay_x = dis_x(gen);
+    _enemy_list.push_back(create_enemy(_in_pos.first + delay_x, _in_pos.second + delay_y, ENEMY_TYPE::ARCHER));
     
     // Tower sprites
     for (auto & tower_type : ALL_TOWER_TYPES) {
