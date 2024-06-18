@@ -38,6 +38,7 @@ struct enemy {
     bool attacking {false};
     DIRECTION facing {DIRECTION::DOWN};
     int current_node {0};
+    float crossed_distance {0};
 
     void kill();
 
@@ -53,3 +54,10 @@ std::string enemy_type_to_string(ENEMY_TYPE type);
 
 
 DIRECTION calculate_direction(std::pair<float, float> current_node, std::pair<float, float> next_node);
+
+
+size_t quick_sort_partition(std::vector<enemy> & vec, size_t const left, size_t const right);
+
+void quick_sort(std::vector<enemy> & vec, size_t const left, size_t const right);
+
+void quick_sort(std::vector<enemy> & vec);
