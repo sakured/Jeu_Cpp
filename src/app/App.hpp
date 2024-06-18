@@ -45,7 +45,7 @@ private:
     std::vector<enemy> _enemy_list {};
     std::vector<tower> _tower_list {};
 
-    int _number_of_enemy_of_type {1};
+    int _number_of_enemy_of_type {0};
 
     std::vector<std::pair<float, float>> _path;
 
