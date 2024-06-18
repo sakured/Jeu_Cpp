@@ -61,3 +61,5 @@ size_t quick_sort_partition(std::vector<enemy> & vec, size_t const left, size_t 
 void quick_sort(std::vector<enemy> & vec, size_t const left, size_t const right);
 
 void quick_sort(std::vector<enemy> & vec);
+
+void create_salve_enemy(std::vector<enemy> & enemy_liste, std::pair<float,float> & in_pos , int number_of_enemy);
