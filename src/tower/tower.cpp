@@ -46,11 +46,11 @@ std::string tower_type_to_string(TOWER_TYPE type) {
 
     switch (type) {
         case TOWER_TYPE::BOW:
-            string_type = "BOW";
+            string_type = "STRAW HAT";
             break;
             
         case TOWER_TYPE::CROSSBOW:
-            string_type = "CROSSBOW";
+            string_type = "WHITE BEARD";
             break;
 
         default:

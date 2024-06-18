@@ -57,9 +57,9 @@ void draw_map(const std::vector<Case> & case_list, const std::vector<GLuint> & s
 void draw_start_button(bool is_playing, float width, float height) {
     GLuint image_if_playing {};
     if (is_playing) {
-        image_if_playing = loadTexture(img::load(make_absolute_path("images/level.png", true), 4, true));
+        image_if_playing = loadTexture(img::load(make_absolute_path("images/pause.png", true), 4, true));
     } else {
-        image_if_playing = loadTexture(img::load(make_absolute_path("images/money.png", true), 4, true));
+        image_if_playing = loadTexture(img::load(make_absolute_path("images/start.png", true), 4, true));
     }
     glPushMatrix();
         glTranslatef(width/height-.25, -.85, 0);
@@ -143,9 +143,9 @@ void draw_starting(SimpleText & TextRenderer, float width, float height) {
     glPopMatrix();
     TextRenderer.Label("Welcome in the One Piece Tower Defense !", width/2, height/2+100, SimpleText::CENTER);
     TextRenderer.Label("The goal is very simple. You are the pirates, and you have to prevent the marine from attacking the devil fruit.", width/2, height/2+120, SimpleText::CENTER);
-    TextRenderer.Label("To attack the different types of marine admirals, build towers. You can buy them with money.", width/2, height/2+140, SimpleText::CENTER);
-    TextRenderer.Label("You have the possibility to build different sorts of towers. Click on the assiciated tile to build the chosen tower.", width/2, height/2+160, SimpleText::CENTER);
-    TextRenderer.Label("(Ex : tile 1 for tower of type 1)", width/2, height/2+180, SimpleText::CENTER);
+    TextRenderer.Label("To attack the different types of marine admirals, build boats of pirates. You can buy them with money.", width/2, height/2+140, SimpleText::CENTER);
+    TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the assiciated tile to build the chosen boat.", width/2, height/2+160, SimpleText::CENTER);
+    TextRenderer.Label("(Ex : tile 1 for boat of type 1)", width/2, height/2+180, SimpleText::CENTER);
     TextRenderer.Label("You have to survive 6 salvos of attacks to win.", width/2, height/2+200, SimpleText::CENTER);
     TextRenderer.Label("You can pause the game at any time.", width/2, height/2+220, SimpleText::CENTER);
     TextRenderer.Label("Click on space to start.", width/2, height/2+240, SimpleText::CENTER);
@@ -212,7 +212,7 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
     // Informations sur les tours
     for (int i=0; i<tower_examples.size(); i++) {
         stream.str("");
-        stream << std::fixed << "TOWER TYPE " << tower_type_to_string(tower_examples[i].type);
+        stream << std::fixed << "BOAT TYPE " << tower_type_to_string(tower_examples[i].type);
         TextRenderer.Label(stream.str().c_str(), 100, tower_margin + i * 120, SimpleText::LEFT);
         stream.str("");
         stream << std::fixed << "Cost : " << tower_examples[i].cost;
@@ -225,7 +225,7 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
         TextRenderer.Label(stream.str().c_str(), 100, tower_margin + 60 + i * 120, SimpleText::LEFT);
         glPushMatrix();
             glTranslatef(-(2*(width-100)/2)/height, tower_sprite_margin - (120*2/height) * i, 0);
-            glScalef((2*100)/height, (2*100)/height, 1);
+            glScalef((2*80)/height, (2*80)/height, 1);
             draw_quad_with_texture(tower_sprites[i]);
         glPopMatrix();
     }
@@ -252,7 +252,7 @@ void draw_level_informations (int level, SimpleText & TextRenderer, float width,
         TextRenderer.Label(stream.str().c_str(), width - 100, enemy_margin + 100 + i * 160, SimpleText::RIGHT);
         glPushMatrix();
             glTranslatef((2*(width-100)/2)/height, enemy_sprite_margin - (165*2/height) * i, 0);
-            glScalef((2*100)/height, (2*100)/height, 1);
+            glScalef((2*80)/height, (2*80)/height, 1);
             draw_quad_with_texture(enemy_sprites[i]);
         glPopMatrix();
     }
