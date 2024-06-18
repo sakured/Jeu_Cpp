@@ -12,7 +12,7 @@ static const int NUMBER_OF_ENEMY_TYPE = 3;
 
 static const ENEMY_TYPE ALL_ENEMY_TYPES[NUMBER_OF_ENEMY_TYPE] = {ENEMY_TYPE::ARCHER, ENEMY_TYPE::KNIGHT, ENEMY_TYPE::BOMBER};
 
-static const std::string ALL_ENEMY_SPRITES[NUMBER_OF_ENEMY_TYPE] = {"images/Towers/pirate1.png", "images/Towers/pirate1.png", "images/Towers/pirate1.png"};
+static const std::string ALL_ENEMY_SPRITES[NUMBER_OF_ENEMY_TYPE] = {"images/Enemies/general.png", "images/Enemies/amiral.png", "images/Enemies/bomb.png"};
 
 enum class DIRECTION {
     UP,
