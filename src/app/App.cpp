@@ -123,7 +123,7 @@ void App::update()
             for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
                 if ((_n_tic % it->pace == 0) && tower.in_range(get_case_coordonates_from_gl_coordonates(it->pos_x, it->pos_y))) {
                     it->pv -= tower.damage;
-                    _money += it->gain;
+                    if (it->pv <= 0) _money += it->gain;
                     break;
                 }   
             }
@@ -132,7 +132,7 @@ void App::update()
         // Tue les ennemis 
         auto new_end = std::remove_if(_enemy_list.begin(), _enemy_list.end(), [](enemy enemy) {
             return enemy.pv <= 0;
-        });
+        });        
 
         _enemy_list.erase(new_end, _enemy_list.end());
 
