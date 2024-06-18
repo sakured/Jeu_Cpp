@@ -12,21 +12,22 @@ void enemy::kill() {
  */
 void enemy::update_position() {
     this->crossed_distance += this->speed;
+
     switch (this->facing) {
-    case DIRECTION::DOWN :
-        this->pos_y += this->speed;
-        break;
-    case DIRECTION::UP :
-        this->pos_y -= this->speed;
-        break;
-    case DIRECTION::LEFT :
-        this->pos_x -= this->speed;
-        break;
-    case DIRECTION::RIGHT :
-        this->pos_x += this->speed;
-        break;
-    default:
-        break;
+        case DIRECTION::DOWN :
+            this->pos_y += this->speed;
+            break;
+        case DIRECTION::UP :
+            this->pos_y -= this->speed;
+            break;
+        case DIRECTION::LEFT :
+            this->pos_x -= this->speed;
+            break;
+        case DIRECTION::RIGHT :
+            this->pos_x += this->speed;
+            break;
+        default:
+            break;
     }
 }
 
@@ -56,7 +57,7 @@ void enemy::update_direction(std::vector<std::pair<float, float>> path) {
     if (update) {
         this->facing = calculate_direction(path[this->current_node], path[this->current_node+1]);
         this->current_node++;
-        this->attacking = (this->current_node == path.size()-1);
+        this->is_attacking = (this->current_node == path.size()-1);
     }
 }
 

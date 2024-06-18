@@ -123,7 +123,7 @@ void App::update()
         }
 
         // Tri des ennemis par ordre de leur distance entre le début et la fin du niveau
-        quick_sort(_enemy_list);
+        if(_enemy_list.size() != 0) merge_sort(_enemy_list);
 
         // Action des tours
         for (auto & tower : _tower_list) {

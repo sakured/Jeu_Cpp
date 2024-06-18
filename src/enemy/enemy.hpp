@@ -35,7 +35,8 @@ struct enemy {
     std::string speed_label {};
     int pv {};
 
-    bool attacking {false};
+    bool is_attacking {false};
+
     DIRECTION facing {DIRECTION::DOWN};
     int current_node {0};
     float crossed_distance {0};
@@ -61,3 +62,9 @@ size_t quick_sort_partition(std::vector<enemy> & vec, size_t const left, size_t 
 void quick_sort(std::vector<enemy> & vec, size_t const left, size_t const right);
 
 void quick_sort(std::vector<enemy> & vec);
+
+void merge_sort_merge(std::vector<enemy> & vec, size_t const left, size_t const middle, size_t const right);
+
+void merge_sort(std::vector<enemy> & vec, size_t const left, size_t const right);
+
+void merge_sort(std::vector<enemy> & vec);
