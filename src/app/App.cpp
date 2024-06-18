@@ -53,7 +53,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     }
     
     // Création de la liste des ennemis
-    int nb_enemy {3};
+    int nb_enemy {1};
     for (int i=0; i<nb_enemy; i++) {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -105,16 +105,14 @@ void App::update()
         const double currentTime{glfwGetTime()};
         const double elapsedTime{currentTime - _previousTime};
         _previousTime = currentTime;
-
-        std::vector<std::vector<enemy>::iterator> to_kill; // Contient les ennemis à tuer
         
         // Actions des ennemis
         for (auto it = _enemy_list.begin(); it < _enemy_list.end(); it++) {
             // L'ennemi attaque s'il est sur le dernier noeud
-            if (it->attacking) {
+            if (it->is_attacking) {
                 if (_n_tic % it->pace == 0) {
-                    if (it->type == ENEMY_TYPE::BOMBER) to_kill.push_back(it);
                     _life -= it->damage;
+                    if (it->type == ENEMY_TYPE::BOMBER) it->pv = 0;
                 }
             }
             // Sinon il se déplace
@@ -125,7 +123,7 @@ void App::update()
         }
 
         // Tri des ennemis par ordre de leur distance entre le début et la fin du niveau
-        // quick_sort(_enemy_list);
+        quick_sort(_enemy_list);
 
         // Action des tours
         for (auto & tower : _tower_list) {
@@ -133,18 +131,20 @@ void App::update()
                 if ((_n_tic % it->pace == 0) && tower.in_range(get_case_coordonates_from_gl_coordonates(it->pos_x, it->pos_y))) {
                     it->pv -= tower.damage;
                     _money += it->gain;
-                    if (it->pv <= 0) to_kill.push_back(it);
+                    break;
                 }   
             }
         }
-        
-        for (auto & enemy_it : to_kill) {
-            _enemy_list.erase(enemy_it);
 
-        }
+        // Tue les ennemis 
+        auto new_end = std::remove_if(_enemy_list.begin(), _enemy_list.end(), [](enemy enemy) {
+            return enemy.pv <= 0;
+        });
+
+        _enemy_list.erase(new_end, _enemy_list.end());
     
-    // Mise à jour de la map
-    render();
+        // Mise à jour de la map
+        render();
     }
 }
 
