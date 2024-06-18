@@ -16,11 +16,11 @@ tower create_tower(int pos_x, int pos_y, TOWER_TYPE type) {
 
     switch (type) {
         case TOWER_TYPE::BOW:
-            tower = {type, pos_x, pos_y, 50, 3, 3, 8};
+            tower = {type, pos_x, pos_y, 50, 4, 3, 8};
             break;
             
         case TOWER_TYPE::CROSSBOW:
-            tower = {type, pos_x, pos_y, 100, 5, 5, 5};
+            tower = {type, pos_x, pos_y, 100, 6, 5, 5};
             break;
 
         default: 

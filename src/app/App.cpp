@@ -84,8 +84,6 @@ void App::setup()
     _TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     _TextRenderer.EnableBlending(true);
 
-    // Affiche l'écran d'accueil
-    draw_starting(_TextRenderer, _width, _height);
     _TextRenderer.Render();
 }
 
@@ -94,12 +92,10 @@ void App::update()
     // Check si le joueur a perdu
     if (_life <= 0) {
         _is_playing = false;
-        draw_game_over();
     
     // Check si le joueur a gagné
     } else if (_number_of_enemy_of_type == _salve_number && _enemy_list.empty()) {
         _is_playing = false;
-        draw_victory();
     
     // Sinon
     } else if (_is_playing) {
@@ -146,7 +142,7 @@ void App::update()
 
         // Création des salves d'ennemis (chaque fois plus puissantes)
 
-        const double current_time{glfwGetTime()};
+        const double current_time{glfwGetTime() - _time_before_start};
 
         _salve_timer = _salve_pace - fmod(current_time, _salve_pace);
 
@@ -155,10 +151,12 @@ void App::update()
             create_salve_enemy(_enemy_list, _in_pos, _number_of_enemy_of_type);
             _next_salve += _salve_pace;
         }
-    
-        // Mise à jour de la map
-        render();
+    } else if (!_is_game_started) {
+        _time_before_start = glfwGetTime();
     }
+    
+    // Mise à jour de la map
+    render();
 }
 
 void App::render()
@@ -168,11 +166,29 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Dessin de la map et des infos
-    draw_map(_tile_list, _tiles_sprites);
-    draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _salve_timer, _tower_sprites, _enemy_sprites); 
-    // draw_start_button(_is_playing, _width, _height);
-    draw_enemies(_enemy_list, _enemy_sprites);
+    if (_is_playing) {
+
+        // Dessin de la map et des infos
+        draw_map(_tile_list, _tiles_sprites);
+        draw_level_informations(1, _TextRenderer, _width, _height, _money, _life, _salve_timer, _tower_sprites, _enemy_sprites); 
+        // draw_start_button(_is_playing, _width, _height);
+
+        draw_enemies(_enemy_list, _enemy_sprites);
+    } else if (_life <= 0) {
+
+        //Affiche le game over
+        draw_game_over();
+
+    } else if (_number_of_enemy_of_type == _salve_number && _enemy_list.empty()) {
+
+        // Affiche la victoire
+        draw_victory();
+
+    } else {
+
+        // Affiche l'écran d'accueil
+        draw_starting(_TextRenderer, _width, _height, _salve_number);
+    }
     
     // Mise à jour du texte
     _TextRenderer.Render();
@@ -269,7 +285,7 @@ void App::size_callback(int width, int height)
 
     // Affiche l'écran d'accueil même quand on change la taille de la fenêtre
     if (!_is_game_started) {
-        draw_starting(_TextRenderer, _width, _height);
+        draw_starting(_TextRenderer, _width, _height, _salve_number);
         _TextRenderer.Render();
     }
 }

@@ -135,7 +135,7 @@ void draw_victory() {
 /**
  * Dessine l'écran d'accueil du jeu
  */
-void draw_starting(SimpleText & TextRenderer, float width, float height) {
+void draw_starting(SimpleText & TextRenderer, float width, float height, int salve_number) {
     glPushMatrix();
         glTranslatef(0, 0.3, 0);
         glScalef(.7f, .7f, 1);
@@ -144,9 +144,11 @@ void draw_starting(SimpleText & TextRenderer, float width, float height) {
     TextRenderer.Label("Welcome in the One Piece Tower Defense !", width/2, height/2+100, SimpleText::CENTER);
     TextRenderer.Label("The goal is very simple. You are the pirates, and you have to prevent the marine from attacking the devil fruit.", width/2, height/2+120, SimpleText::CENTER);
     TextRenderer.Label("To attack the different types of marine admirals, build boats of pirates. You can buy them with money.", width/2, height/2+140, SimpleText::CENTER);
-    TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the associated tile to build the chosen boat.", width/2, height/2+160, SimpleText::CENTER);
-    TextRenderer.Label("(Ex : tile 1 for boat of type 1)", width/2, height/2+180, SimpleText::CENTER);
-    TextRenderer.Label("You have to survive 6 salvos of attacks to win.", width/2, height/2+200, SimpleText::CENTER);
+    TextRenderer.Label("You have the possibility to build different sorts of boats. Click on the associated tile to build the chosen boat and then where you want to build it.", width/2, height/2+160, SimpleText::CENTER);
+    TextRenderer.Label("(Ex : key 1 for boat of type 1)", width/2, height/2+180, SimpleText::CENTER);
+    std::stringstream stream {};
+    stream << std::fixed << "You have to survive " << salve_number << std::fixed << " salvos of attacks to win.";
+    TextRenderer.Label(stream.str().c_str(), width/2, height/2+200, SimpleText::CENTER);
     TextRenderer.Label("You can pause and restart the game at any time if you click on P.", width/2, height/2+220, SimpleText::CENTER);
     TextRenderer.Label("Click on space to start.", width/2, height/2+240, SimpleText::CENTER);
 }

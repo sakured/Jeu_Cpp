@@ -29,10 +29,11 @@ private:
     int _height {};
     float _viewSize {};
     unsigned int _n_tic {};
-    double _salve_pace {10};
+    double _salve_pace {10.0};
     double _salve_timer {_salve_pace};
     double _next_salve {_salve_pace};
-    int _salve_number {10};
+    double _time_before_start {0.0};
+    int _salve_number {8};
 
     std::pair<float, float> _in_pos;
     std::pair<float, float> _out_pos;
